@@ -224,7 +224,7 @@ function NS:New ( Name )
 	Bottom:SetHeight( 8 );
 	local Background = Bottom:CreateTexture( nil, "BORDER" );
 	Background:SetAllPoints();
-	Background:SetTexture( 0.4, 0.4, 0.4, 0.75 );
+	Background:SetColorTexture( 0.4, 0.4, 0.4, 0.75 );
 
 	-- Scroll window
 	local Window = CreateFrame( "Frame", nil, Frame );
@@ -246,7 +246,7 @@ function NS:New ( Name )
 
 	Frame.Background = ScrollFrame:CreateTexture( nil, "BACKGROUND" );
 	Frame.Background:SetAllPoints();
-	Frame.Background:SetTexture( 0.05, 0.05, 0.06 );
+	Frame.Background:SetColorTexture( 0.05, 0.05, 0.06 );
 
 	-- Scrollbar
 	local Bar = CreateFrame( "Slider", nil, ScrollFrame );
@@ -270,7 +270,7 @@ function NS:New ( Name )
 	Thumb:SetSize( Bar.Dec:GetSize() );
 	Thumb:SetTexCoord( 0.25, 0.75, 0.25, 0.75 ); -- Remove transparent border
 	local Background = Bar:CreateTexture( nil, "BACKGROUND" );
-	Background:SetTexture( 0, 0, 0, 0.5 );
+	Background:SetColorTexture( 0, 0, 0, 0.5 );
 	Background:SetAllPoints();
 
 	Bar:SetPoint( "TOPRIGHT", Bar.Dec, "BOTTOMRIGHT" );

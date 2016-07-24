@@ -17,7 +17,7 @@ local UPDATE_INTERVAL = 0.2; -- Time to wait after last keypress before updating
 
 -- Editor colors
 NS.Text:SetTextColor( 1, 1, 1 ); -- Line number color
-NS.Gutter:SetTexture( 0.2, 0.2, 0.2 ); -- Line number background
+NS.Gutter:SetColorTexture( 0.2, 0.2, 0.2 ); -- Line number background
 
 
 
@@ -79,8 +79,7 @@ function NS:Update ()
 	end
 	local Index, Count = 0, 0;
 	local Text, Lines = self.Text, self.Lines;
-	local LineHeight = Editor.Edit:GetSpacing() + select( 2, Editor.Edit:GetFont() );
-	Text:SetWidth( Editor.Edit:GetWidth() - Editor.TEXT_INSET );
+	local Width = Editor.ScrollFrame:GetWidth() - ( self:GetWidth() + Editor.TEXT_INSET ); -- Editor width
 	local EndingLast;
 	for Line, Ending in Editor.Edit:GetText():gmatch( "([^\r\n]*)()" ) do
 		if ( EndingLast ~= Ending ) then
@@ -90,7 +89,7 @@ function NS:Update ()
 
 			-- Add blank space for wrapped lines
 			Text:SetText( Line );
-			for Extra = 2, math.floor( Text:GetStringHeight() / LineHeight + 0.5 ) do
+			for Extra = 1, Text:GetStringWidth() / Width do
 				Index = Index + 1;
 				Lines[ Index ] = "";
 			end
@@ -100,7 +99,6 @@ function NS:Update ()
 		Lines[ Index ] = nil;
 	end
 
-	Text:SetWidth( 0 ); -- Remove constraint
 	Text:SetText( table.concat( Lines, "\n" ) );
 	local Width, Height = Text:GetSize();
 	self:SetSize( Width + Editor.TEXT_INSET, Height + Editor.TEXT_INSET * 2 );

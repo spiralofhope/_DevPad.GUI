@@ -1,4 +1,4 @@
-## Interface: 60000
+## Interface: 50001
 ## Title: _|cffCCCC88DevPad|r.GUI
 ## Notes: Script list and editor for _|cffCCCC88DevPad|r.
 ## Author: Saiket
@@ -32,6 +32,6 @@ _DevPad.GUI.List.lua
 _DevPad.GUI.Editor.lua
 # Optional modules
 _DevPad.GUI.List.Search.lua
-_DevPad.GUI.Editor.History.lua
 _DevPad.GUI.Editor.Color.lua
+_DevPad.GUI.Editor.History.lua
 _DevPad.GUI.Editor.LineNumbers.lua
