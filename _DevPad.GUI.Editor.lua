@@ -74,7 +74,7 @@ NS.Font.Paths = { -- Font file paths for font cycling button
 
 -- Editor colors
 --NS.Edit:SetTextColor( 1, 1, 1 ); -- Default text color
---NS.Background:SetTexture( 0.05, 0.05, 0.06 ); -- Text background
+--NS.Background:SetColorTexture( 0.05, 0.05, 0.06 ); -- Text background
 
 
 
@@ -568,7 +568,7 @@ NS.Shortcuts:EnableKeyboard( false );
 -- Cursor line highlight
 Edit.Line:SetPoint( "LEFT", Margin );
 Edit.Line:SetPoint( "RIGHT" );
-Edit.Line:SetTexture( 1, 1, 1, 0.05 );
+Edit.Line:SetColorTexture( 1, 1, 1, 0.05 );
 
 ChatEdit_InsertLink = NS.ChatEditInsertLink;
 ChatEdit_OnEditFocusLost = NS.ChatEditOnEditFocusLost;
