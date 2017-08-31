@@ -16,4 +16,3 @@ A fork of [Torhal](http://wow.curseforge.com/profiles/Torhal/) and [saiket](http
   -  Beginning with the main description pages
 - Import existing tickets
   -  Is there a way to import them from an existing project?  Can I also do old tickets?
-- Later - In a couple of years, take over the curseforge project if he's really really gone.
