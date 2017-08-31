@@ -143,7 +143,7 @@ do
 	end
 	--- Scrolls a bar when its button is clicked.
 	function NS:ScrollButtonOnClick ()
-		PlaySound( 1115 );
+		PlaySound( 1115 )                                                   --  UChatScrollButton / U_CHAT_SCROLL_BUTTON
 		BarIncrement( self:GetParent(), self.Delta );
 	end
 end
@@ -190,7 +190,7 @@ local ResizeTexture = [[Interface\AddOns\]]..( ... )..[[\Skin\ResizeGrip]];
 function NS:New ( Name )
 	local Frame = CreateFrame( "Frame", Name, UIParent );
 	Frame:Hide();
-	Frame:SetScale( 0.9 );
+	Frame:SetScale( _DevPad.scale )
 	Frame:SetFrameStrata( "HIGH" );
 	Frame:SetToplevel( true );
 	Frame:SetBackdrop( {

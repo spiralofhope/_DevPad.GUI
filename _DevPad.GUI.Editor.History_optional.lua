@@ -60,12 +60,12 @@ function NS:UpdateButtons ( Script )
 end
 --- Undoes an edit when clicked.
 function NS.UndoButton:OnClick ()
-	PlaySound( 856 );
+	PlaySound( 856 )                                                      --  igMainMenuOptionCheckBoxOn / IG_MAINMENU_OPTION_CHECKBOX_ON
 	return NS:Undo( NS.Script );
 end
 --- Redoes an edit when clicked.
 function NS.RedoButton:OnClick ()
-	PlaySound( 856 );
+	PlaySound( 856 )                                                      --  igMainMenuOptionCheckBoxOn / IG_MAINMENU_OPTION_CHECKBOX_ON
 	return NS:Redo( NS.Script );
 end
 --- Undoes/redoes a change to the script with <ctrl+z> and <ctrl+shift+Z>.

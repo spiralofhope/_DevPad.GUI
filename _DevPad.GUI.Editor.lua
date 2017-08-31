@@ -1,6 +1,7 @@
+-- TODO - accept a table, and print it out nicely.
 local function debug( text )
-  --if not _DevPad_options.debug then return end
-  print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
+  --print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
+  return nil
 end
 
 
@@ -14,6 +15,10 @@ local _DevPad, GUI = _DevPad, select( 2, ... )
 
 local NS = GUI.Dialog:New( '_DevPadGUIEditor' )
 GUI.Editor = NS
+-- TODO - It would be nice to properly scale the editor window, but it is not this simple.  A lot of other code relies on the scaling and will be entirely out of sorts.
+--    For more background, see https://github.com/spiralofhope/_DevPad.GUI/issues/1
+--_DevPadGUIEditor:SetScale( _DevPad.scale )
+_DevPadGUIEditor:SetScale( 1 )
 
 NS.Run          = CreateFrame( 'Button', nil, NS )
 NS.Lua          = NS:NewButton( [[Interface\MacroFrame\MacroFrame-Icon]] )
@@ -94,7 +99,7 @@ NS.Font.Paths = {
 
 --- @return True if script changed.
 function NS:SetScriptObject( Script )
-  -- Script is a table, so it can't be debugged like this..
+  -- Script is a table, so it can't be debugged like this.. yet.
   --debug( 'function NS:SetScriptObject( ' .. Script .. ' )' )
   if ( self.Script ~= Script ) then
     if ( self.Script ) then
@@ -206,6 +211,7 @@ do
       Cursor = Cursor - CountSubstring( self:GetText(), '||', 0, Cursor )
       debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
     end
+    debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
     return Cursor
   end
 end
@@ -222,6 +228,7 @@ do
       end
       Pipes = Pipes + 1
     end
+    debug( 'Pipes ' .. Pipes )
     return Pipes % 2 == 1
   end
   local COLOR_LENGTH = 10
@@ -239,12 +246,11 @@ do
     if ( Cursor > 0 and IsPipeActive( Text, Cursor ) ) then
       Cursor = Cursor - 1 -- Can't be just after an active pipe
     end
-    local _, End = Text:find( "^|[Rr]", Cursor + 1 )
+    local __, End = Text:find( "^|[Rr]", Cursor + 1 )
     if ( End ) then -- Cursor is just before a color terminator
       debug( 'Cursor is just before a color terminator' )
       Cursor = End
     elseif ( Cursor > 0 ) then
-      debug( Cursor .. ' > 0' )
       local Start = Text:find( "|[Cc]%x%x%x%x%x%x%x%x", max( 1, Cursor - COLOR_LENGTH + 1 ) )
       debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
       if ( Start and Start <= Cursor ) then -- Cursor is in or just after a color code
@@ -335,7 +341,7 @@ end
 
 --- Runs the open script.
 function NS.Run:OnClick()
-  PlaySound( 823 )
+  PlaySound( 823 )  --  igMiniMapZoomIn / IG_MINIMAP_ZOOM_IN
   return _DevPad.SafeCall( NS.Script )
 end
 --- Cycles to the next available font.
@@ -351,7 +357,7 @@ function NS.FontCycle:OnClick()
   return NS:SetFont( Paths[ NewIndex ], NS.FontSize )
 end
 do
-  local SizeDelta =  2
+  local SizeDelta =  1
   local SizeMin   =  6
   local SizeMax   = 34
   --- Decrements the current font size.
@@ -387,17 +393,21 @@ do
   local LastHeight
   --- Moves the edit box's view to follow the cursor.
   function NS.Edit:OnCursorChanged( CursorX, CursorY, CursorWidth, CursorHeight )
-    debug( 'Cursor position: ' .. CursorX     .. ' x ' .. CursorY      )
-    debug( 'Cursor size:     ' .. CursorWidth .. ' x ' .. CursorHeight )
+    debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
+    debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
     self.LineHeight = CursorHeight
     -- Update line highlight
     self.Line:SetHeight( CursorHeight )
     self.Line:SetPoint( 'TOP', 0, CursorY - NS.TEXT_INSET )
 
-    if ( self.CursorForceUpdate -- Force view to cursor, even if it didn't change
-      or ( self:HasFocus() and ( -- Only move view when cursor *moves*
-        LastX ~= CursorX or LastY ~= CursorY
-        or LastWidth ~= CursorWidth or LastHeight ~= CursorHeight
+    if ( self.CursorForceUpdate
+      -- Force view to cursor, even if it didn't change
+      or ( self:HasFocus() and (
+        -- Only move view when cursor *moves*
+           LastX ~= CursorX
+        or LastY ~= CursorY
+        or LastWidth  ~= CursorWidth
+        or LastHeight ~= CursorHeight
     ) ) ) then
       self.CursorForceUpdate = nil
       LastX = CursorX
@@ -407,6 +417,11 @@ do
 
       local Top    = -CursorY
       local Bottom = CursorHeight + ( 2 * NS.TEXT_INSET ) - CursorY
+
+debug( '-----------------------------------------------------------------' )
+debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
+debug( Bottom )
+
       NS.ScrollFrame:SetVerticalScrollToCoord( Top, Bottom )
     end
   end
@@ -522,11 +537,11 @@ end
 
 
 function NS:OnShow()
-  PlaySound( 844 )
+  PlaySound( 844 )  --  igQuestListOpen / IG_QUEST_LOG_OPEN
 end
 --- Close the open script.
 function NS:OnHide()
-  PlaySound( 845 )
+  PlaySound( 845 )  --  igQuestListClose / IG_QUEST_LOG_CLOSE
   StaticPopup_Hide( '_DEVPAD_GOTO' )
   if ( not self:IsShown() ) then -- Explicitly hidden, not obscured by world map
     return self:SetScriptObject()
