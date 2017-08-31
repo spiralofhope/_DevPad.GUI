@@ -41,9 +41,9 @@ if ( GUI.IndentationLib ) then
   local T = GUI.IndentationLib.Tokens
   NS.SyntaxColors = {}
   --- Assigns a color to multiple tokens at once.
-  local function Color ( Code, ... )
-  --debug( 'local function Color (' .. Code, ... .. ' )' )
-  debug( 'local function Color (' .. Code .. ' )' )
+  local function Color( Code, ... )
+  --debug( 'local function Color(' .. Code, ... .. ' )' )
+  debug( 'local function Color(' .. Code .. ' )' )
     for Index = 1, select( '#', ... ) do
       NS.SyntaxColors[ select( Index, ... ) ] = Code
     end
@@ -93,9 +93,9 @@ NS.Font.Paths = {
 
 
 --- @return True if script changed.
-function NS:SetScriptObject ( Script )
+function NS:SetScriptObject( Script )
   -- Script is a table, so it can't be debugged like this..
-  --debug( 'function NS:SetScriptObject ( ' .. Script .. ' )' )
+  --debug( 'function NS:SetScriptObject( ' .. Script .. ' )' )
   if ( self.Script ~= Script ) then
     if ( self.Script ) then
       self.Script._EditCursor = self.Edit:GetCursorPositionUnescaped()
@@ -130,7 +130,7 @@ function NS:SetScriptObject ( Script )
   end
 end
 --- @return True if font changed.
-function NS:SetFont ( Path, Size )
+function NS:SetFont( Path, Size )
   Path = Path or DEJAVU_SANS_MONO
   Size = Size or 10
   debug( 'font size ' .. Size )
@@ -149,9 +149,9 @@ end
 
 do
   --- @return Number of Substring found between cursor positions Start and End.
-  local function CountSubstring ( Text, Substring, Start, End )
-    --debug( 'local function CountSubstring ( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
-      debug( 'local function CountSubstring ( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+  local function CountSubstring( Text, Substring, Start, End )
+    --debug( 'local function CountSubstring( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+      debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
     if ( Start >= End ) then
       return 0
     end
@@ -169,8 +169,8 @@ do
     end
   end
   --- Highlights a substring in the editor, accounting for escaped pipes.
-  function NS.Edit:HighlightTextUnescaped ( Start, End )
-    debug( 'function NS.Edit:HighlightTextUnescaped ( ' .. Start .. ' - ' .. End .. ' )' )
+  function NS.Edit:HighlightTextUnescaped( Start, End )
+    debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
     if ( self.Lua ) then
       local PipesBeforeStart
       if ( Start or End ) then
@@ -186,21 +186,21 @@ do
     return self:HighlightText( Start, End )
   end
   --- Forces the cursor into view the next time it moves, even if this editbox isn't focused.
-  function NS.Edit:ScrollToNextCursorPosition ()
-    debug( 'function NS.Edit:ScrollToNextCursorPosition ()' )
+  function NS.Edit:ScrollToNextCursorPosition()
+    debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
     self.CursorForceUpdate = true
   end
   --- Moves the cursor to a position in the current script, accounting for escaped pipes.
-  function NS.Edit:SetCursorPositionUnescaped ( Cursor )
-    debug( 'function NS.Edit:SetCursorPositionUnescaped ( ' .. Cursor .. ' )' )
+  function NS.Edit:SetCursorPositionUnescaped( Cursor )
+    debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
     if ( self.Lua ) then
       Cursor = Cursor + CountSubstring( NS.Script._Text, '|', 0, Cursor )
     end
     return self:SetCursorPosition( Cursor )
   end
   --- @return Cursor position, ignoring extra pipe escape characters.
-  function NS.Edit:GetCursorPositionUnescaped ()
-    debug( 'function NS.Edit:GetCursorPositionUnescaped ()' )
+  function NS.Edit:GetCursorPositionUnescaped()
+    debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
     local Cursor = self:GetCursorPosition()
     if ( self.Lua ) then
       Cursor = Cursor - CountSubstring( self:GetText(), '||', 0, Cursor )
@@ -212,9 +212,9 @@ end
 do
   local BYTE_PIPE = ( '|' ):byte()
   --- @return True if the pipe at Position isn't escaped.
-  local function IsPipeActive ( Text, Position )
-    --debug( 'local function IsPipeActive ( ' .. Text .. ' - ' .. Position .. ' )' )
-    debug( 'local function IsPipeActive ( <text>, ' .. Position .. ' )' )
+  local function IsPipeActive( Text, Position )
+    --debug( 'local function IsPipeActive( ' .. Text .. ' - ' .. Position .. ' )' )
+    debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
     local Pipes = 0
     for Index = Position, 1, -1 do
       if ( Text:byte( Index ) ~= BYTE_PIPE ) then
@@ -230,7 +230,7 @@ do
   --   terminators.  On live realms, the cursor interacts with codes in these
   --   positions like visible characters, which is confusing.  On builds with
   --   debug assertions enabled, doing this crashes the game instead.
-  function NS.Edit:ValidateCursorPosition ( Cursor )
+  function NS.Edit:ValidateCursorPosition( Cursor )
     debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
     if ( self.Lua ) then -- Pipes are escaped
       return Cursor
@@ -259,13 +259,13 @@ end
 
 do
   --- Sets both button textures' vertex colors.
-  local function SetVertexColors ( self, ... )
+  local function SetVertexColors( self, ... )
     -- TODO? - debug text
     self:GetNormalTexture():SetVertexColor( ... )
     self:GetPushedTexture():SetVertexColor( ... )
   end
   --- Enables or disables syntax highlighting in the edit box.
-  function NS:ScriptSetLua ( _, Script )
+  function NS:ScriptSetLua( _, Script )
     -- TODO? - debug text
     if ( Script == self.Script ) then
       local Edit = self.Edit
@@ -295,21 +295,21 @@ do
   end
 end
 --- Shows the selected script from the list frame.
-function NS:ListSetSelection ( _, Object )
+function NS:ListSetSelection( _, Object )
   -- TODO? - debug text
   if ( Object and Object._Class == 'Script' ) then
     return self:SetScriptObject( Object )
   end
 end
 --- Updates the script's name on the window title.
-function NS:ObjectSetName ( _, Object )
+function NS:ObjectSetName( _, Object )
   -- TODO? - debug text
   if ( Object == self.Script ) then
     self.Title:SetText( Object._Name )
   end
 end
 --- Synchronizes editor text with the script object if it gets set externally while editing.
-function NS:ScriptSetText ( _, Script )
+function NS:ScriptSetText( _, Script )
   -- TODO? - debug text
   if ( Script == self.Script ) then
     local Text = self.Edit.Lua and Script._Text:gsub( '|', '||' ) or Script._Text
@@ -323,7 +323,7 @@ function NS:ScriptSetText ( _, Script )
   end
 end
 --- Hides the editor if the edited script gets removed.
-function NS:FolderRemove ( _, _, Object )
+function NS:FolderRemove( _, _, Object )
   -- TODO? - debug text
   if ( Object == self.Script
     or ( Object._Class == 'Folder' and Object:Contains( self.Script ) )
@@ -334,12 +334,12 @@ end
 
 
 --- Runs the open script.
-function NS.Run:OnClick ()
+function NS.Run:OnClick()
   PlaySound( 823 )
   return _DevPad.SafeCall( NS.Script )
 end
 --- Cycles to the next available font.
-function NS.FontCycle:OnClick ()
+function NS.FontCycle:OnClick()
   local Paths = NS.Font.Paths
   local NewIndex = 1
   for Index = 1, #Paths - 1 do
@@ -355,29 +355,29 @@ do
   local SizeMin   =  6
   local SizeMax   = 34
   --- Decrements the current font size.
-  function NS.FontDecrease:OnClick ()
+  function NS.FontDecrease:OnClick()
     return NS:SetFont( NS.FontPath, max( SizeMin, NS.FontSize - SizeDelta ) )
   end
   --- Increments the current font size.
-  function NS.FontIncrease:OnClick ()
+  function NS.FontIncrease:OnClick()
     return NS:SetFont( NS.FontPath, min( SizeMax, NS.FontSize + SizeDelta ) )
   end
 end
 --- Toggles Lua mode for this script.
-function NS.Lua:OnClick ()
+function NS.Lua:OnClick()
   return NS.Script:SetLua( not NS.Script._Lua )
 end
 
 
 --- Focus the edit box text if empty space gets clicked.
-function NS.Focus:OnMouseDown ()
+function NS.Focus:OnMouseDown()
   NS.Edit:HighlightText( 0, 0 )
   NS.Edit:ScrollToNextCursorPosition()
   NS.Edit:SetCursorPositionUnescaped( NS.Edit:ValidateCursorPosition( #NS.Script._Text ) )
   NS.Edit:SetFocus()
 end
 --- Simulate a tab character with spaces.
-function NS.Edit:OnTabPressed ()
+function NS.Edit:OnTabPressed()
   self:Insert( ( ' ' ):rep( TAB_WIDTH ) )
 end
 do
@@ -386,7 +386,7 @@ do
   local LastWidth
   local LastHeight
   --- Moves the edit box's view to follow the cursor.
-  function NS.Edit:OnCursorChanged ( CursorX, CursorY, CursorWidth, CursorHeight )
+  function NS.Edit:OnCursorChanged( CursorX, CursorY, CursorWidth, CursorHeight )
     debug( 'Cursor position: ' .. CursorX     .. ' x ' .. CursorY      )
     debug( 'Cursor size:     ' .. CursorWidth .. ' x ' .. CursorHeight )
     self.LineHeight = CursorHeight
@@ -412,14 +412,14 @@ do
   end
 end
 --- Saves text immediately after it changes.
-function NS.Edit:OnTextChanged ()
+function NS.Edit:OnTextChanged()
   if ( NS.Script ) then
     local Text = self:GetText()
     NS.Script:SetText( self.Lua and Text:gsub( '||', '|' ) or Text )
   end
 end
 --- Links/opens the clicked link.
-function NS.Edit:OnMouseUp ( MouseButton )
+function NS.Edit:OnMouseUp( MouseButton )
   if ( self.Lua ) then
     return
   end
@@ -461,34 +461,34 @@ function NS.Edit:OnMouseUp ( MouseButton )
   end
 end
 --- Start listening for shortcut keys.
-function NS.Edit:OnEditFocusGained ()
+function NS.Edit:OnEditFocusGained()
   NS.Shortcuts:EnableKeyboard( true )
 end
 --- Stop listening for shortcut keys.
-function NS.Edit:OnEditFocusLost ()
+function NS.Edit:OnEditFocusLost()
   NS.Shortcuts:EnableKeyboard( false )
 end
 --- Stop listening for control commands.
-function NS.Shortcuts:OnKeyDown ( Key )
+function NS.Shortcuts:OnKeyDown( Key )
   if ( self[ Key ] ) then
     return self[ Key ]( self, Key )
   end
 end
 --- Cancels pending focus change.
-function NS.Shortcuts:OnHide ()
+function NS.Shortcuts:OnHide()
   self:SetScript( 'OnUpdate', nil )
 end
 do
   local PendingEditBox
   --- Sets keyboard focus on next frame.
-  local function OnUpdate ( self )
+  local function OnUpdate( self )
     self:SetScript( 'OnUpdate', nil )
     PendingEditBox:HighlightText()
     return PendingEditBox:SetFocus()
   end
   --- Changes the keyboard focus after a shortcut gets processed.
   -- This prevents the new edit box from receiving the original shortcut key.
-  function NS.Shortcuts:SetFocus ( EditBox )
+  function NS.Shortcuts:SetFocus( EditBox )
     PendingEditBox = EditBox
     self:SetScript( 'OnUpdate', OnUpdate )
   end
@@ -498,7 +498,7 @@ end
 do
   local Backup = ChatEdit_InsertLink
   --- Hook to add clicked links' code to the edit box.
-  function NS.ChatEditInsertLink ( Link, ... )
+  function NS.ChatEditInsertLink( Link, ... )
     if ( Link and NS.Edit:HasFocus() ) then
       NS.Edit:Insert( NS.Edit.Lua and Link:gsub( '|', '||' ) or Link )
       return true
@@ -509,7 +509,7 @@ end
 do
   local Backup = ChatEdit_OnEditFocusLost
   --- Hook to keep the chat edit box open when focusing the editor.
-  function NS:ChatEditOnEditFocusLost ( ... )
+  function NS:ChatEditOnEditFocusLost( ... )
     if ( IsMouseButtonDown() ) then
       local Focus = GetMouseFocus()
       if ( Focus and ( Focus == NS.Edit or Focus == NS.Focus or Focus == NS.Margin ) ) then
@@ -521,11 +521,11 @@ do
 end
 
 
-function NS:OnShow ()
+function NS:OnShow()
   PlaySound( 844 )
 end
 --- Close the open script.
-function NS:OnHide ()
+function NS:OnHide()
   PlaySound( 845 )
   StaticPopup_Hide( '_DEVPAD_GOTO' )
   if ( not self:IsShown() ) then -- Explicitly hidden, not obscured by world map
@@ -537,7 +537,7 @@ end
 do
   local Pack = NS.Pack
   --- Saves font, position, and size information for saved variables.
-  function NS:Pack ( ... )
+  function NS:Pack( ... )
     local Options = Pack( self, ... )
     Options.FontPath = self.FontPath
     Options.FontSize = self.FontSize
@@ -548,7 +548,7 @@ do
   end
   local Unpack = NS.Unpack
   --- Loads font, position, and size from saved variables.
-  function NS:Unpack ( Options, ... )
+  function NS:Unpack( Options, ... )
     self:SetFont( Options.FontPath, Options.FontSize )
     if ( self.Color ) then
       self.Color:Unpack( Options.Color or {} )
@@ -585,7 +585,7 @@ Run:SetScript( 'OnClick', Run.OnClick )
 Run.tooltipText = GUI.L.SCRIPT_RUN
 
 --- @return A new title button.
-local function SetupTitleButton ( Button, TooltipText, Offset )
+local function SetupTitleButton( Button, TooltipText, Offset )
   NS:AddTitleButton( Button, ( Offset or 0 ) - 2 )
   Button:SetScript( 'OnClick', Button.OnClick )
   Button:SetMotionScriptsWhileDisabled( true )
@@ -625,7 +625,7 @@ NS.Shortcuts:EnableKeyboard( false )
 -- Cursor line highlight
 Edit.Line:SetPoint( 'LEFT', Margin )
 Edit.Line:SetPoint( 'RIGHT' )
-Edit.Line:SetColorTexture( 1, 1, 1, 0.05 )
+Edit.Line:SetColorTexture( 1, 1, 1, 0.1 )
 
 ChatEdit_InsertLink = NS.ChatEditInsertLink
 ChatEdit_OnEditFocusLost = NS.ChatEditOnEditFocusLost

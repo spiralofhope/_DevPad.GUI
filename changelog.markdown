@@ -12,3 +12,4 @@
   -  7.3.0 introduced PlaySound() changes.
   -  Referenced https://www.townlong-yak.com/framexml/ptr/SoundKitConstants.lua
 - `_DevPad.GUI.Editor.lua` had its style aggressively changed.
+- Slightly-brightened the current line's highlighting.
