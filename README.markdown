@@ -7,13 +7,10 @@ A
 A notepad for Lua scripts and mini-addons.
 
 A fork of 
-[Torhal](http://wow.curseforge.com/profiles/Torhal/)
- and 
-[saiket](http://wow.curseforge.com/profiles/saiket/)
-'s 
-[_DevPad](http://wow.curseforge.com/addons/devpad/)
-(the GUI component)
-.
+saiket's
+[_DevPad.GUI](https://github.com/Saiket/wow-saiket/tree/master/_DevPad.GUI),
+the GUI component of 
+[_DevPad](https://github.com/Saiket/wow-saiket/tree/master/_DevPad)
 
 [source code](https://github.com/spiralofhope/_DevPad.GUI)
  · [home page](http://blog.spiralofhope.com/?p=17397)
