@@ -9,8 +9,8 @@ A notepad for Lua scripts and mini-addons.
 A fork of 
 saiket's
 [_DevPad.GUI](https://github.com/Saiket/wow-saiket/tree/master/_DevPad.GUI),
-the GUI component of 
-[_DevPad](https://github.com/Saiket/wow-saiket/tree/master/_DevPad)
+the load-on-demand GUI component of 
+[_DevPad](https://github.com/spiralofhope/_DevPad)
 
 [source code](https://github.com/spiralofhope/_DevPad.GUI)
  · [home page](http://blog.spiralofhope.com/?p=17397)
