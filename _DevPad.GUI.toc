@@ -1,4 +1,4 @@
-# _DevPad has most recently been tested against:
+# _DevPad.GUI has most recently been tested against:
 #   Version 7.3.0 (24920) (Release x64)
 #   Aug 28 2017
 
