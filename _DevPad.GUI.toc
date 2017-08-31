@@ -38,7 +38,7 @@ _DevPad.GUI.Editor.lua
 # ---------------------------
 # TESTING WITH THESE DISABLED
 # ---------------------------
-# _DevPad.GUI.List.Search.lua
-# _DevPad.GUI.Editor.Color.lua
-# _DevPad.GUI.Editor.History.lua
-# _DevPad.GUI.Editor.LineNumbers.lua
+# _DevPad.GUI.List.Search_optional.lua
+# _DevPad.GUI.Editor.Color_optional.lua
+# _DevPad.GUI.Editor.History_optional.lua
+# _DevPad.GUI.Editor.LineNumbers_optional.lua
