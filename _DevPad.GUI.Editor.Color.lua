@@ -254,7 +254,7 @@ end
 
 --- Highlights selected text when left clicked, or opens dropdown on right click.
 function NS.Swatch:OnClick ( Button )
-	PlaySound( "igMainMenuOptionCheckBoxOn" );
+	PlaySound( 856 );
 	if ( Button == "RightButton" ) then
 		return ToggleFrame( NS.Dropdown );
 	end
@@ -263,7 +263,7 @@ function NS.Swatch:OnClick ( Button )
 end
 --- Picks color at the cursor when clicked.
 function NS.Dropper:OnClick ()
-	PlaySound( "igMainMenuOptionCheckBoxOn" );
+	PlaySound( 856 );
 	NS:SetSwatchColor( NS:GetCursorColor() );
 	NS.Dropdown:Hide();
 end
@@ -299,7 +299,7 @@ do
 	--- Opens a color selection dialog to choose a custom color.
 	function NS.Dropdown.Custom:OnClick ()
 		NS.Dropdown:Hide();
-		PlaySound( "igMainMenuOptionCheckBoxOn" );
+		PlaySound( 856 );
 		Info.r, Info.g, Info.b = NS.R, NS.G, NS.B;
 		FirstUpdate = true;
 		OpenColorPicker( Info );
@@ -312,7 +312,7 @@ function NS.Dropdown:DefaultOnShow ()
 end
 --- Selects this swatch's color.
 function NS.Dropdown:SwatchOnClick ()
-	PlaySound( "igMainMenuOptionCheckBoxOn" );
+	PlaySound( 856 );
 	NS:SetSwatchColor( self.R, self.G, self.B );
 	NS:ColorSelection( self.R, self.G, self.B );
 	NS.Dropdown:Hide();
