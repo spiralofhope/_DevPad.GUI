@@ -18,6 +18,18 @@ the GUI component of
  · [latest beta](https://github.com/spiralofhope/_DevPad.GUI/archive/master.zip)
 
 
+
+# Notes
+
+- This addon is largely unchanged from saiket's efforts!
+- I am a documentation guy, not a programmer.  It is unlikely I can make any real changes.
+  -  If you are a developer, I am happy to:
+     -  Accept GitHub pull requests.
+     -  Add you as a contributor on GitHub.
+     -  Hand this project over!
+
+
+
 # Installation
 
 Since it's a regular addon, it's manually installed the same as every other addon would be.
