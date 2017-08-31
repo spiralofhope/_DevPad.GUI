@@ -35,10 +35,7 @@ _DevPad.GUI.List.lua
 _DevPad.GUI.Editor.lua
 
 # Optional modules
-# ---------------------------
-# TESTING WITH THESE DISABLED
-# ---------------------------
-# _DevPad.GUI.List.Search_optional.lua
-# _DevPad.GUI.Editor.Color_optional.lua
-# _DevPad.GUI.Editor.History_optional.lua
-# _DevPad.GUI.Editor.LineNumbers_optional.lua
+_DevPad.GUI.List.Search_optional.lua
+_DevPad.GUI.Editor.Color_optional.lua
+_DevPad.GUI.Editor.History_optional.lua
+_DevPad.GUI.Editor.LineNumbers_optional.lua
