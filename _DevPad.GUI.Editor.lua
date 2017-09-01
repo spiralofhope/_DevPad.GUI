@@ -5,87 +5,101 @@ local function debug( text )
 end
 
 
---[[****************************************************************************
-  * _DevPad.GUI by Saiket                                                      *
-  * _DevPad.GUI.Editor.lua - Script text editor frame.                         *
-  ****************************************************************************]]
-
-
-local _DevPad, GUI = _DevPad, select( 2, ... )
-
+local GUI = select( 2, ... )
+-- Main editor frame
 local NS = GUI.Dialog:New( '_DevPadGUIEditor' )
+
+
+
+local default_font = [[Interface\AddOns\]]..( ... )..[[\Skin\DejaVuSansMono.ttf]]
+NS.DefaultWidth  = 500
+NS.DefaultHeight = 500
+local TAB_WIDTH = 2
+-- True to enable auto-indentation for Lua scripts:
+local AUTO_INDENT_LUA_SCRIPTS = true
+
+
+
+local _DevPad = _DevPad
+
 GUI.Editor = NS
 -- TODO - It would be nice to properly scale the editor window, but it is not this simple.  A lot of other code relies on the scaling and will be entirely out of sorts.
 --    For more background, see https://github.com/spiralofhope/_DevPad.GUI/issues/1
 --_DevPadGUIEditor:SetScale( _DevPad.scale )
+
+debug( 'scale was: ' .. _DevPadGUIEditor:GetScale() )
+
+--_DevPadGUIEditor:SetScale( 1 + ( 1 - _DevPadGUIEditor:GetScale() ) )
 _DevPadGUIEditor:SetScale( 1 )
+--_DevPadGUIEditor:SetScale( 1.2 )
 
-NS.Run          = CreateFrame( 'Button', nil, NS )
-NS.Lua          = NS:NewButton( [[Interface\MacroFrame\MacroFrame-Icon]] )
-NS.FontCycle    = NS:NewButton( [[Interface\ICONS\INV_Misc_Note_04]]     )
-NS.FontDecrease = NS:NewButton( [[Interface\Icons\Spell_ChargeNegative]] )
-NS.FontIncrease = NS:NewButton( [[Interface\Icons\Spell_ChargePositive]] )
-
-NS.ScrollChild  = CreateFrame( 'Frame',   nil, NS.ScrollFrame )
-NS.Focus        = CreateFrame( 'Frame',   nil, NS.Window      )
-NS.Edit         = CreateFrame( 'EditBox', nil, NS.ScrollChild )
-NS.Edit.Line    = NS.Edit:CreateTexture()
-
-NS.Shortcuts    = CreateFrame( 'Frame',   nil, NS.Edit        )
+debug( 'scale became: ' .. _DevPadGUIEditor:GetScale() )
 
 
-NS.DefaultWidth  = 500
-NS.DefaultHeight = 500
+do  --  Create basic frames
+  NS.Run          = CreateFrame( 'Button', nil, NS )
+  NS.Lua          = NS:NewButton( [[Interface\MacroFrame\MacroFrame-Icon]] )
+  NS.FontCycle    = NS:NewButton( [[Interface\ICONS\INV_Misc_Note_04]]     )
+  NS.FontDecrease = NS:NewButton( [[Interface\Icons\Spell_ChargeNegative]] )
+  NS.FontIncrease = NS:NewButton( [[Interface\Icons\Spell_ChargePositive]] )
 
--- If too small, mouse dragging the text selection won't scroll the view easily:
-NS.TEXT_INSET = 8
-local TAB_WIDTH = 2
--- True to enable auto-indentation for Lua scripts:
-local AUTO_INDENT = true
-if ( GUI.IndentationLib ) then
-  local T = GUI.IndentationLib.Tokens
-  NS.SyntaxColors = {}
-  --- Assigns a color to multiple tokens at once.
-  local function Color( Code, ... )
-  --debug( 'local function Color(' .. Code, ... .. ' )' )
-  --debug( 'local function Color(' .. Code .. ' )' )
-    for Index = 1, select( '#', ... ) do
-      NS.SyntaxColors[ select( Index, ... ) ] = Code
-    end
-  end
-  -- Reserved words
-  Color( "|cff88bbdd", T.KEYWORD )
-  Color( "|cffff6666", T.UNKNOWN )
-  Color( "|cffcc7777", T.CONCAT, T.VARARG, T.ASSIGNMENT, T.PERIOD, T.COMMA, T.SEMICOLON, T.COLON, T.SIZE )
-  Color( "|cffffaa00", T.NUMBER )
-  Color( "|cff888888", T.STRING, T.STRING_LONG )
-  Color( "|cff55cc55", T.COMMENT_SHORT, T.COMMENT_LONG )
-  Color( "|cffccaa88", T.LEFTCURLY, T.RIGHTCURLY, T.LEFTBRACKET, T.RIGHTBRACKET, T.LEFTPAREN, T.RIGHTPAREN, T.ADD, T.SUBTRACT, T.MULTIPLY, T.DIVIDE, T.POWER, T.MODULUS )
-  Color( "|cffccddee", T.EQUALITY, T.NOTEQUAL, T.LT, T.LTE, T.GT, T.GTE )
-  Color(
-    "|cff55ddcc", 
-    -- Minimal standard Lua functions
-    'assert', 'error', 'ipairs', 'next', 'pairs', 'pcall', 'print', 'select', 'tonumber', 'tostring', 'type', 'unpack',
-    -- Libraries
-    'bit', 'coroutine', 'math', 'string', 'table'
-  )
-  -- Some of WoW's aliases for standard Lua functions
-  Color(
-    "|cffddaaff",
-    -- math
-    'abs', 'ceil', 'floor', 'max', 'min',
-    -- string
-    'format', 'gsub', 'strbyte', 'strchar', 'strconcat', 'strfind', 'strjoin', 'strlower', 'strmatch', 'strrep', 'strrev', 'strsplit', 'strsub', 'strtrim', 'strupper', 'tostringall',
-    -- table
-    'sort', 'tinsert', 'tremove', 'wipe'
-  )
+  NS.ScrollChild  = CreateFrame( 'Frame',   nil, NS.ScrollFrame )
+  NS.Focus        = CreateFrame( 'Frame',   nil, NS.Window      )
+  NS.Edit         = CreateFrame( 'EditBox', nil, NS.ScrollChild )
+  NS.Edit.Line    = NS.Edit:CreateTexture()
+
+  NS.Shortcuts    = CreateFrame( 'Frame',   nil, NS.Edit        )
 end
 
-local DEJAVU_SANS_MONO = [[Interface\AddOns\]]..( ... )..[[\Skin\DejaVuSansMono.ttf]]
+
+do  --  Indentation and color
+  -- If too small, mouse dragging the text selection won't scroll the view easily:
+  NS.TEXT_INSET = 8
+  if ( GUI.IndentationLib ) then
+    local T = GUI.IndentationLib.Tokens
+    NS.SyntaxColors = {}
+    --- Assigns a color to multiple tokens at once.
+    local function Color( Code, ... )
+    --debug( 'local function Color(' .. Code, ... .. ' )' )
+    --debug( 'local function Color(' .. Code .. ' )' )
+      for Index = 1, select( '#', ... ) do
+        NS.SyntaxColors[ select( Index, ... ) ] = Code
+      end
+    end
+    -- Reserved words
+    Color( "|cff88bbdd", T.KEYWORD )
+    Color( "|cffff6666", T.UNKNOWN )
+    Color( "|cffcc7777", T.CONCAT, T.VARARG, T.ASSIGNMENT, T.PERIOD, T.COMMA, T.SEMICOLON, T.COLON, T.SIZE )
+    Color( "|cffffaa00", T.NUMBER )
+    Color( "|cff888888", T.STRING, T.STRING_LONG )
+    Color( "|cff55cc55", T.COMMENT_SHORT, T.COMMENT_LONG )
+    Color( "|cffccaa88", T.LEFTCURLY, T.RIGHTCURLY, T.LEFTBRACKET, T.RIGHTBRACKET, T.LEFTPAREN, T.RIGHTPAREN, T.ADD, T.SUBTRACT, T.MULTIPLY, T.DIVIDE, T.POWER, T.MODULUS )
+    Color( "|cffccddee", T.EQUALITY, T.NOTEQUAL, T.LT, T.LTE, T.GT, T.GTE )
+    Color(
+      "|cff55ddcc", 
+      -- Minimal standard Lua functions
+      'assert', 'error', 'ipairs', 'next', 'pairs', 'pcall', 'print', 'select', 'tonumber', 'tostring', 'type', 'unpack',
+      -- Libraries
+      'bit', 'coroutine', 'math', 'string', 'table'
+    )
+    -- Some of WoW's aliases for standard Lua functions
+    Color(
+      "|cffddaaff",
+      -- math
+      'abs', 'ceil', 'floor', 'max', 'min',
+      -- string
+      'format', 'gsub', 'strbyte', 'strchar', 'strconcat', 'strfind', 'strjoin', 'strlower', 'strmatch', 'strrep', 'strrev', 'strsplit', 'strsub', 'strtrim', 'strupper', 'tostringall',
+      -- table
+      'sort', 'tinsert', 'tremove', 'wipe'
+    )
+  end
+end
+
+
 NS.Font = CreateFont( '_DevPadGUIEditorFont' )
 -- Font file paths for font cycling button
 NS.Font.Paths = {
-  DEJAVU_SANS_MONO,
+  default_font,
   [[Fonts\FRIZQT__.TTF]],
   [[Fonts\ARIALN.TTF]]
 }
@@ -136,7 +150,7 @@ function NS:SetScriptObject( Script )
 end
 --- @return True if font changed.
 function NS:SetFont( Path, Size )
-  Path = Path or DEJAVU_SANS_MONO
+  Path = Path or default_font
   Size = Size or 10
   --debug( 'font size ' .. Size )
   --debug( 'font      ' .. Path )
@@ -284,7 +298,7 @@ do
           Edit:SetCursorPositionUnescaped( Cursor )
           if ( GUI.IndentationLib ) then
             GUI.IndentationLib.Enable( Edit, -- Suppress immediate auto-indent
-              AUTO_INDENT and TAB_WIDTH, self.SyntaxColors, true )
+              AUTO_INDENT_LUA_SCRIPTS and TAB_WIDTH, self.SyntaxColors, true )
           end
         end
       elseif ( Edit.Lua ) then -- Disable syntax highlighting and unescape control codes
