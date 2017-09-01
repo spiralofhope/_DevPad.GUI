@@ -190,7 +190,7 @@ local ResizeTexture = [[Interface\AddOns\]]..( ... )..[[\Skin\ResizeGrip]];
 function NS:New ( Name )
 	local Frame = CreateFrame( "Frame", Name, UIParent );
 	Frame:Hide();
-	Frame:SetScale( _DevPad.scale )
+	--Frame:SetScale( _DevPad_GUI_options.scale )
 	Frame:SetFrameStrata( "HIGH" );
 	Frame:SetToplevel( true );
 	Frame:SetBackdrop( {

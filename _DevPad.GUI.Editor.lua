@@ -68,22 +68,22 @@ GUI.Dialog.StickyFrames[ 'Editor' ] = NS
 
 -- If too small, mouse dragging the text selection won't scroll the view easily:
 -- TODO - I wonder if I ought do something like this, if scaling isn't going to be forced to be one:
---NS.TEXT_INSET = math.ceil( 8 * _DevPad.scale )
+--NS.TEXT_INSET = math.ceil( 8 * _DevPad_GUI_options.scale )
 NS.TEXT_INSET = 8
 
 
-do  --  FIXME - scaling
-  debug( 'scale was: ' .. _DevPadGUIEditor:GetScale() )
-  -- TODO - It would be nice to properly scale the editor window, but it is not this simple.  A lot of other code relies on the scaling and will be entirely out of sorts.
-  --    For more background, see https://github.com/spiralofhope/_DevPad.GUI/issues/1
-  _DevPadGUIEditor:SetScale( 1 )
-  _DevPadGUIEditor:SetScale( _DevPad.scale )
-  --_DevPadGUIEditor:SetScale( 1 * NS:GetEffectiveScale() )
+--do  --  FIXME - scaling
+  --debug( 'scale was: ' .. _DevPadGUIEditor:GetScale() )
+  ---- TODO - It would be nice to properly scale the editor window, but it is not this simple.  A lot of other code relies on the scaling and will be entirely out of sorts.
+  ----    For more background, see https://github.com/spiralofhope/_DevPad.GUI/issues/1
+  --_DevPadGUIEditor:SetScale( 1 )
+  --_DevPadGUIEditor:SetScale( _DevPad_GUI_options.scale )
+  ----_DevPadGUIEditor:SetScale( 1 * NS:GetEffectiveScale() )
 
-  --_DevPadGUIEditor:SetScale( 1 + ( 1 - _DevPadGUIEditor:GetScale() ) )
-  --_DevPadGUIEditor:SetScale( 1.2 )
-  debug( 'scale became: ' .. _DevPadGUIEditor:GetScale() )
-end
+  ----_DevPadGUIEditor:SetScale( 1 + ( 1 - _DevPadGUIEditor:GetScale() ) )
+  ----_DevPadGUIEditor:SetScale( 1.2 )
+  --debug( 'scale became: ' .. _DevPadGUIEditor:GetScale() )
+--end
 
 
 
