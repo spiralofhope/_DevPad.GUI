@@ -5,7 +5,7 @@
 
 
 _DevPad.scale = 0.9
-
+_DevPad.scale = 1.0
 
 
 local AddOnName, NS = ...;
