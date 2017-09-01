@@ -1,6 +1,6 @@
 -- TODO - accept a table, and print it out nicely.
 local function debug( text )
-  --print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
+  print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
   return nil
 end
 
@@ -48,7 +48,7 @@ if ( GUI.IndentationLib ) then
   --- Assigns a color to multiple tokens at once.
   local function Color( Code, ... )
   --debug( 'local function Color(' .. Code, ... .. ' )' )
-  debug( 'local function Color(' .. Code .. ' )' )
+  --debug( 'local function Color(' .. Code .. ' )' )
     for Index = 1, select( '#', ... ) do
       NS.SyntaxColors[ select( Index, ... ) ] = Code
     end
@@ -138,8 +138,8 @@ end
 function NS:SetFont( Path, Size )
   Path = Path or DEJAVU_SANS_MONO
   Size = Size or 10
-  debug( 'font size ' .. Size )
-  debug( 'font      ' .. Path )
+  --debug( 'font size ' .. Size )
+  --debug( 'font      ' .. Path )
 
   if ( ( self.FontPath ~= Path or self.FontSize ~= Size )
     and self.Font:SetFont( Path, Size )
@@ -156,7 +156,7 @@ do
   --- @return Number of Substring found between cursor positions Start and End.
   local function CountSubstring( Text, Substring, Start, End )
     --debug( 'local function CountSubstring( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
-      debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+    --debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
     if ( Start >= End ) then
       return 0
     end
@@ -166,7 +166,7 @@ do
     while ( true ) do
       Start = Text:find( Substring, Start, true )
       if ( not Start or Start > End ) then
-        debug( Count .. ' Substring found between cursor positions Start and End' )
+        --debug( Count .. ' Substring found between cursor positions Start and End' )
         return Count
       end
       Count = Count + 1
@@ -175,7 +175,7 @@ do
   end
   --- Highlights a substring in the editor, accounting for escaped pipes.
   function NS.Edit:HighlightTextUnescaped( Start, End )
-    debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
+    --debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
     if ( self.Lua ) then
       local PipesBeforeStart
       if ( Start or End ) then
@@ -192,12 +192,12 @@ do
   end
   --- Forces the cursor into view the next time it moves, even if this editbox isn't focused.
   function NS.Edit:ScrollToNextCursorPosition()
-    debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
+    --debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
     self.CursorForceUpdate = true
   end
   --- Moves the cursor to a position in the current script, accounting for escaped pipes.
   function NS.Edit:SetCursorPositionUnescaped( Cursor )
-    debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
+    --debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
     if ( self.Lua ) then
       Cursor = Cursor + CountSubstring( NS.Script._Text, '|', 0, Cursor )
     end
@@ -205,13 +205,13 @@ do
   end
   --- @return Cursor position, ignoring extra pipe escape characters.
   function NS.Edit:GetCursorPositionUnescaped()
-    debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
+    --debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
     local Cursor = self:GetCursorPosition()
     if ( self.Lua ) then
       Cursor = Cursor - CountSubstring( self:GetText(), '||', 0, Cursor )
-      debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
+      --debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
     end
-    debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
+    --debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
     return Cursor
   end
 end
@@ -220,7 +220,7 @@ do
   --- @return True if the pipe at Position isn't escaped.
   local function IsPipeActive( Text, Position )
     --debug( 'local function IsPipeActive( ' .. Text .. ' - ' .. Position .. ' )' )
-    debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
+    --debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
     local Pipes = 0
     for Index = Position, 1, -1 do
       if ( Text:byte( Index ) ~= BYTE_PIPE ) then
@@ -228,7 +228,7 @@ do
       end
       Pipes = Pipes + 1
     end
-    debug( 'Pipes ' .. Pipes )
+    --debug( 'Pipes ' .. Pipes )
     return Pipes % 2 == 1
   end
   local COLOR_LENGTH = 10
@@ -238,7 +238,7 @@ do
   --   positions like visible characters, which is confusing.  On builds with
   --   debug assertions enabled, doing this crashes the game instead.
   function NS.Edit:ValidateCursorPosition( Cursor )
-    debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
+    --debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
     if ( self.Lua ) then -- Pipes are escaped
       return Cursor
     end
@@ -248,16 +248,16 @@ do
     end
     local __, End = Text:find( "^|[Rr]", Cursor + 1 )
     if ( End ) then -- Cursor is just before a color terminator
-      debug( 'Cursor is just before a color terminator' )
+      --debug( 'Cursor is just before a color terminator' )
       Cursor = End
     elseif ( Cursor > 0 ) then
       local Start = Text:find( "|[Cc]%x%x%x%x%x%x%x%x", max( 1, Cursor - COLOR_LENGTH + 1 ) )
-      debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
+      --debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
       if ( Start and Start <= Cursor ) then -- Cursor is in or just after a color code
         Cursor = Start - 1
       end
     end
-    debug( 'NS.Edit:ValidateCursorPosition() - Cursor returned as: ' .. Cursor )
+    --debug( 'NS.Edit:ValidateCursorPosition() - Cursor returned as: ' .. Cursor )
     return Cursor
   end
 end
@@ -393,8 +393,9 @@ do
   local LastHeight
   --- Moves the edit box's view to follow the cursor.
   function NS.Edit:OnCursorChanged( CursorX, CursorY, CursorWidth, CursorHeight )
-    debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
-    debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
+    --debug( ' -- ' )
+    --debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
+    --debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
     self.LineHeight = CursorHeight
     -- Update line highlight
     self.Line:SetHeight( CursorHeight )
@@ -418,9 +419,8 @@ do
       local Top    = -CursorY
       local Bottom = CursorHeight + ( 2 * NS.TEXT_INSET ) - CursorY
 
-debug( '-----------------------------------------------------------------' )
-debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
-debug( Bottom )
+--debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
+--debug( Bottom )
 
       NS.ScrollFrame:SetVerticalScrollToCoord( Top, Bottom )
     end
