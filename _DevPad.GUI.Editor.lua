@@ -471,7 +471,7 @@ end
 
 
 
-do  --  TODO - describe
+do  --  Color and auto-tabbing
   local function SetVertexColors( self, ... )  --  Sets both button textures' vertex colors.
     -- TODO? - debug text
     self:GetNormalTexture():SetVertexColor( ... )
