@@ -4,19 +4,11 @@
   ****************************************************************************]]
 
 
---_DevPad_GUI_options.scale = 1.0
----- This isn't working.. yet.
---do  --  Default options
-  --_DevPadGUIOptions = {}
-  --_DevPadGUIOptions.scale = 1.0
---end
-
-
-
-
 -- TODO - accept a table, and print it out nicely.
 function _Devpad_debug( text )
-  --print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
+  if _DevPad_options.debug then
+    print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
+  end
   return nil
 end
 
