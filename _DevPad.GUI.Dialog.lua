@@ -188,7 +188,11 @@ end
 local ResizeTexture = [[Interface\AddOns\]]..( ... )..[[\Skin\ResizeGrip]];
 --- @return A new frame.
 function NS:New ( Name )
-	local Frame = CreateFrame( "Frame", Name, UIParent );
+  --  Don't inherit from the world frame, to resolve a scaling issue:
+  --    https://github.com/spiralofhope/_DevPad.GUI/issues/1
+  --  This defaults to a scale of 1, and everything else is inheriting from this frame.
+  --  Note - Explicitly setting the scale of this frame will re-break the editor's cursor.
+	local Frame = CreateFrame( 'Frame', Name, nil, nil )
 	Frame:Hide();
 	--Frame:SetScale( _DevPad_GUI_options.scale )
 	Frame:SetFrameStrata( "HIGH" );

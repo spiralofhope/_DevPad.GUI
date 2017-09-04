@@ -14,6 +14,12 @@
 
 
 
+-- TODO - accept a table, and print it out nicely.
+function _Devpad_debug( text )
+  --print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
+  return nil
+end
+
 
 
 local AddOnName, NS = ...;

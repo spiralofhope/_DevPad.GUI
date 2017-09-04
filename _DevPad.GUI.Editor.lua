@@ -1,15 +1,3 @@
--- IDEA - instead of having font size changes, have scale changes.
-
-
-
--- TODO - accept a table, and print it out nicely.
-local function debug( text )
-  print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
-  return nil
-end
-
-
-
 local GUI = select( 2, ... )
 local NS = GUI.Dialog:New( '_DevPadGUIEditor' )
 do  --  The main editor frame
@@ -72,30 +60,15 @@ GUI.Dialog.StickyFrames[ 'Editor' ] = NS
 NS.TEXT_INSET = 8
 
 
---do  --  FIXME - scaling
-  --debug( 'scale was: ' .. _DevPadGUIEditor:GetScale() )
-  ---- TODO - It would be nice to properly scale the editor window, but it is not this simple.  A lot of other code relies on the scaling and will be entirely out of sorts.
-  ----    For more background, see https://github.com/spiralofhope/_DevPad.GUI/issues/1
-  --_DevPadGUIEditor:SetScale( 1 )
-  --_DevPadGUIEditor:SetScale( _DevPad_GUI_options.scale )
-  ----_DevPadGUIEditor:SetScale( 1 * NS:GetEffectiveScale() )
-
-  ----_DevPadGUIEditor:SetScale( 1 + ( 1 - _DevPadGUIEditor:GetScale() ) )
-  ----_DevPadGUIEditor:SetScale( 1.2 )
-  --debug( 'scale became: ' .. _DevPadGUIEditor:GetScale() )
---end
-
-
 
 do  --  Create basic frames
-  NS.ScrollChild  = CreateFrame( 'Frame',   nil, NS.ScrollFrame )
--- TODO - this seems interesting!
+  NS.ScrollChild  = CreateFrame( 'Frame', nil, NS.ScrollFrame )
   NS.ScrollChild:SetSize( 1, 1 )
   NS.ScrollFrame:SetScrollChild( NS.ScrollChild )
   do  --  focus
     NS.Focus = CreateFrame( 'Frame', nil, NS.Window )
-    NS.Focus:SetAllPoints( NS.ScrollFrame)
-    function NS.Focus:OnMouseDown()                                         --  Focus the edit box text if empty space gets clicked.
+    NS.Focus:SetAllPoints( NS.ScrollFrame )
+    function NS.Focus:OnMouseDown()                                     --  Focus the edit box text if empty space gets clicked.
       NS.Edit:HighlightText( 0, 0 )
       NS.Edit:ScrollToNextCursorPosition()
       NS.Edit:SetCursorPositionUnescaped( NS.Edit:ValidateCursorPosition( #NS.Script._Text ) )
@@ -119,7 +92,7 @@ do  --  Create basic frames
       )
       NS.Edit:SetScript( 'OnEscapePressed', NS.Edit.ClearFocus )
 
-      function NS.Edit:OnTextChanged()                                        --  Saves text immediately after it changes.
+      function NS.Edit:OnTextChanged()                                  --  Saves text immediately after it changes.
         if ( NS.Script ) then
           local Text = self:GetText()
           NS.Script:SetText( self.Lua and Text:gsub( '||', '|' ) or Text )
@@ -169,7 +142,7 @@ do  --  Create basic frames
         end
       end
       NS.Edit:SetScript( 'OnMouseUp', NS.Edit.OnMouseUp )
-      function NS.Edit:OnTabPressed()                                         --  Simulate a tab character with spaces.
+      function NS.Edit:OnTabPressed()                                   --  Simulate a tab character with spaces.
         self:Insert( ( ' ' ):rep( TAB_WIDTH ) )
       end
       NS.Edit:SetScript( 'OnTabPressed', NS.Edit.OnTabPressed )
@@ -178,9 +151,9 @@ do  --  Create basic frames
         local LastY
         local LastWidth
         local LastHeight
-        --debug( ' -- ' )
-        --debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
-        --debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
+        --_Devpad_debug( ' -- ' )
+        --_Devpad_debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
+        --_Devpad_debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
         self.LineHeight = CursorHeight
         -- Update line highlight
         self.Line:SetHeight( CursorHeight )
@@ -204,8 +177,8 @@ do  --  Create basic frames
           local Top    = -CursorY
           local Bottom = CursorHeight + ( 2 * NS.TEXT_INSET ) - CursorY
 
-      --debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
-      --debug( Bottom )
+      --_Devpad_debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
+      --_Devpad_debug( Bottom )
 
           NS.ScrollFrame:SetVerticalScrollToCoord( Top, Bottom )
         end
@@ -219,7 +192,7 @@ do  --  Create basic frames
       NS.Shortcuts = CreateFrame( 'Frame',   nil, NS.Edit )
       NS.Shortcuts:SetPropagateKeyboardInput( true )
       NS.Shortcuts:EnableKeyboard( false )
-      function NS.Shortcuts:OnHide()                                        --  Cancels pending focus change.
+      function NS.Shortcuts:OnHide()                                    --  Cancels pending focus change.
         self:SetScript( 'OnUpdate', nil )
       end
       NS.Shortcuts:SetScript( 'OnHide', NS.Shortcuts.OnHide )
@@ -287,8 +260,8 @@ do  --  Indentation and color
     NS.SyntaxColors = {}
     --- Assigns a color to multiple tokens at once.
     local function Color( Code, ... )
-    --debug( 'local function Color(' .. Code, ... .. ' )' )
-    --debug( 'local function Color(' .. Code .. ' )' )
+    --_Devpad_debug( 'local function Color(' .. Code, ... .. ' )' )
+    --_Devpad_debug( 'local function Color(' .. Code .. ' )' )
       for Index = 1, select( '#', ... ) do
         NS.SyntaxColors[ select( Index, ... ) ] = Code
       end
@@ -327,7 +300,7 @@ end
 function NS:SetScriptObject( Script )                                   --  TODO - describe
   --  @return True if script changed.
   -- Script is a table, so it can't be debugged like this.. yet.
-  --debug( 'function NS:SetScriptObject( ' .. Script .. ' )' )
+  --_Devpad_debug( 'function NS:SetScriptObject( ' .. Script .. ' )' )
   if ( self.Script ~= Script ) then
     if ( self.Script ) then
       self.Script._EditCursor = self.Edit:GetCursorPositionUnescaped()
@@ -364,19 +337,18 @@ end
 
 
 
-function NS:SetFont( Path, Size )                                       --  TODO - describe
+function NS:SetFont( font_path, font_size )
   --  @return True if font changed.
-  Path = Path or NS.default_font
-  Size = Size or 10
-  --debug( 'font size ' .. Size )
-  --debug( 'font      ' .. Path )
-
-  if ( ( self.FontPath ~= Path or self.FontSize ~= Size )
-    and self.Font:SetFont( Path, Size )
+  font_path = font_path or NS.default_font
+  font_size = font_size or 10
+  if ( ( self.FontPath ~= font_path or self.FontSize ~= font_size )
+    and self.Font:SetFont( font_path, font_size )
   ) then
-    self.FontPath = Path
-    self.FontSize = Size
-    GUI.Callbacks:Fire( 'EditorSetFont', Path, Size )
+    self.FontPath = font_path
+    self.FontSize = font_size
+    GUI.Callbacks:Fire( 'EditorSetFont', font_path, font_size )
+    _Devpad_debug( 'font size changed to ' .. font_size )
+    _Devpad_debug( font_path )
     return true
   end
 end
@@ -386,8 +358,8 @@ end
 do  --  TODO                                                            --  bunches of stuff, in a do block made by saiket
   --- @return Number of Substring found between cursor positions Start and End.
   local function CountSubstring( Text, Substring, Start, End )
-    --debug( 'local function CountSubstring( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
-    --debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+    --_Devpad_debug( 'local function CountSubstring( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+    --_Devpad_debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
     if ( Start >= End ) then
       return 0
     end
@@ -397,7 +369,7 @@ do  --  TODO                                                            --  bunc
     while ( true ) do
       Start = Text:find( Substring, Start, true )
       if ( not Start or Start > End ) then
-        --debug( Count .. ' Substring found between cursor positions Start and End' )
+        --_Devpad_debug( Count .. ' Substring found between cursor positions Start and End' )
         return Count
       end
       Count = Count + 1
@@ -406,7 +378,7 @@ do  --  TODO                                                            --  bunc
   end
   --- Highlights a substring in the editor, accounting for escaped pipes.
   function NS.Edit:HighlightTextUnescaped( Start, End )
-    --debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
+    --_Devpad_debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
     if ( self.Lua ) then
       local PipesBeforeStart
       if ( Start or End ) then
@@ -423,12 +395,12 @@ do  --  TODO                                                            --  bunc
   end
   --- Forces the cursor into view the next time it moves, even if this editbox isn't focused.
   function NS.Edit:ScrollToNextCursorPosition()
-    --debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
+    --_Devpad_debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
     self.CursorForceUpdate = true
   end
   --- Moves the cursor to a position in the current script, accounting for escaped pipes.
   function NS.Edit:SetCursorPositionUnescaped( Cursor )
-    --debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
+    --_Devpad_debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
     if ( self.Lua ) then
       Cursor = Cursor + CountSubstring( NS.Script._Text, '|', 0, Cursor )
     end
@@ -436,13 +408,13 @@ do  --  TODO                                                            --  bunc
   end
   --- @return Cursor position, ignoring extra pipe escape characters.
   function NS.Edit:GetCursorPositionUnescaped()
-    --debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
+    --_Devpad_debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
     local Cursor = self:GetCursorPosition()
     if ( self.Lua ) then
       Cursor = Cursor - CountSubstring( self:GetText(), '||', 0, Cursor )
-      --debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
+      --_Devpad_debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
     end
-    --debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
+    --_Devpad_debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
     return Cursor
   end
 end
@@ -453,8 +425,8 @@ do  --  deal with pipes in text
   local BYTE_PIPE = ( '|' ):byte()
   local function IsPipeActive( Text, Position )
     -- @return True if the pipe at Position isn't escaped.
-    --debug( 'local function IsPipeActive( ' .. Text .. ' - ' .. Position .. ' )' )
-    --debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
+    --_Devpad_debug( 'local function IsPipeActive( ' .. Text .. ' - ' .. Position .. ' )' )
+    --_Devpad_debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
     local Pipes = 0
     for Index = Position, 1, -1 do
       if ( Text:byte( Index ) ~= BYTE_PIPE ) then
@@ -462,7 +434,7 @@ do  --  deal with pipes in text
       end
       Pipes = Pipes + 1
     end
-    --debug( 'Pipes ' .. Pipes )
+    --_Devpad_debug( 'Pipes ' .. Pipes )
     return Pipes % 2 == 1
   end
   local COLOR_LENGTH = 10
@@ -472,9 +444,9 @@ do  --  deal with pipes in text
   --   positions like visible characters, which is confusing.  On builds with
   --   debug assertions enabled, doing this crashes the game instead.
   function NS.Edit:ValidateCursorPosition( Cursor )
-    --debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
+    --_Devpad_debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
     if ( self.Lua ) then
-      debug( 'Pipes are escaped' )
+      _Devpad_debug( 'Pipes are escaped' )
       return Cursor
     end
     local Text = NS.Script._Text
@@ -483,16 +455,16 @@ do  --  deal with pipes in text
     end
     local __, End = Text:find( "^|[Rr]", Cursor + 1 )
     if ( End ) then -- Cursor is just before a color terminator
-      --debug( 'Cursor is just before a color terminator' )
+      --_Devpad_debug( 'Cursor is just before a color terminator' )
       Cursor = End
     elseif ( Cursor > 0 ) then
       local Start = Text:find( "|[Cc]%x%x%x%x%x%x%x%x", max( 1, Cursor - COLOR_LENGTH + 1 ) )
-      --debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
+      --_Devpad_debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
       if ( Start and Start <= Cursor ) then -- Cursor is in or just after a color code
         Cursor = Start - 1
       end
     end
-    --debug( 'NS.Edit:ValidateCursorPosition() - Cursor returned as: ' .. Cursor )
+    --_Devpad_debug( 'NS.Edit:ValidateCursorPosition() - Cursor returned as: ' .. Cursor )
     return Cursor
   end
 end
@@ -606,8 +578,8 @@ do  --  Title (top bar)
   --  Title text
   function NS:ObjectSetName( __, Object )
     if ( Object == self.Script ) then
-      debug( 'Updating the title to:' )
-      debug( Object._Name )
+      _Devpad_debug( 'Updating the title to:' )
+      _Devpad_debug( Object._Name )
       self.Title:SetText( Object._Name )
       NS.Title:SetPoint( 'TOPLEFT', NS.Run, 'TOPRIGHT', 0, -7 )
       NS.Title:SetJustifyH( 'LEFT' )
