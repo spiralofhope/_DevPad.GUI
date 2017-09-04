@@ -4,16 +4,6 @@
   ****************************************************************************]]
 
 
--- TODO - accept a table, and print it out nicely.
-function _Devpad_debug( text )
-  if _DevPad_options.debug then
-    print( '_DevPad - ' .. GetTime() .. ' - ' .. tostring( text ) )
-  end
-  return nil
-end
-
-
-
 local AddOnName, NS = ...;
 _DevPad.GUI = NS;
 

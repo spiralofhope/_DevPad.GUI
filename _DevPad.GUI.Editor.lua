@@ -21,9 +21,8 @@ do  --  The main editor frame
   NS:SetScript( 'OnHide', NS.OnHide )
 end
 
-local TAB_WIDTH = 2
--- True to enable auto-indentation for Lua scripts:
-local AUTO_INDENT_LUA_SCRIPTS = true
+--local TAB_WIDTH = 2
+--local AUTO_INDENT_LUA_SCRIPTS = true
 local default_text_color_r = 1
 local default_text_color_g = 1
 local default_text_color_b = 1
@@ -143,7 +142,7 @@ do  --  Create basic frames
       end
       NS.Edit:SetScript( 'OnMouseUp', NS.Edit.OnMouseUp )
       function NS.Edit:OnTabPressed()                                   --  Simulate a tab character with spaces.
-        self:Insert( ( ' ' ):rep( TAB_WIDTH ) )
+        self:Insert( ( ' ' ):rep( _DevPad_tab_width() ) )
       end
       NS.Edit:SetScript( 'OnTabPressed', NS.Edit.OnTabPressed )
       function NS.Edit:OnCursorChanged( CursorX, CursorY, CursorWidth, CursorHeight )  --  Move the edit box's view to follow the cursor.
@@ -151,9 +150,9 @@ do  --  Create basic frames
         local LastY
         local LastWidth
         local LastHeight
-        --_Devpad_debug( ' -- ' )
-        --_Devpad_debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
-        --_Devpad_debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
+        --_DevPad_debug( ' -- ' )
+        --_DevPad_debug( 'Cursor position: x=' .. CursorX     .. ' y=' .. CursorY      )
+        --_DevPad_debug( 'Cursor size:     w=' .. CursorWidth .. ' h=' .. CursorHeight )
         self.LineHeight = CursorHeight
         -- Update line highlight
         self.Line:SetHeight( CursorHeight )
@@ -177,8 +176,8 @@ do  --  Create basic frames
           local Top    = -CursorY
           local Bottom = CursorHeight + ( 2 * NS.TEXT_INSET ) - CursorY
 
-      --_Devpad_debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
-      --_Devpad_debug( Bottom )
+      --_DevPad_debug( CursorHeight .. ' - ' .. ( 2 * NS.TEXT_INSET ) .. ' .. ' .. CursorY )
+      --_DevPad_debug( Bottom )
 
           NS.ScrollFrame:SetVerticalScrollToCoord( Top, Bottom )
         end
@@ -260,8 +259,8 @@ do  --  Indentation and color
     NS.SyntaxColors = {}
     --- Assigns a color to multiple tokens at once.
     local function Color( Code, ... )
-    --_Devpad_debug( 'local function Color(' .. Code, ... .. ' )' )
-    --_Devpad_debug( 'local function Color(' .. Code .. ' )' )
+    --_DevPad_debug( 'local function Color(' .. Code, ... .. ' )' )
+    --_DevPad_debug( 'local function Color(' .. Code .. ' )' )
       for Index = 1, select( '#', ... ) do
         NS.SyntaxColors[ select( Index, ... ) ] = Code
       end
@@ -300,7 +299,7 @@ end
 function NS:SetScriptObject( Script )                                   --  TODO - describe
   --  @return True if script changed.
   -- Script is a table, so it can't be debugged like this.. yet.
-  --_Devpad_debug( 'function NS:SetScriptObject( ' .. Script .. ' )' )
+  --_DevPad_debug( 'function NS:SetScriptObject( ' .. Script .. ' )' )
   if ( self.Script ~= Script ) then
     if ( self.Script ) then
       self.Script._EditCursor = self.Edit:GetCursorPositionUnescaped()
@@ -347,8 +346,8 @@ function NS:SetFont( font_path, font_size )
     self.FontPath = font_path
     self.FontSize = font_size
     GUI.Callbacks:Fire( 'EditorSetFont', font_path, font_size )
-    _Devpad_debug( 'font size changed to ' .. font_size )
-    _Devpad_debug( font_path )
+    _DevPad_debug( 'font size changed to ' .. font_size )
+    _DevPad_debug( font_path )
     return true
   end
 end
@@ -358,8 +357,8 @@ end
 do  --  TODO                                                            --  bunches of stuff, in a do block made by saiket
   --- @return Number of Substring found between cursor positions Start and End.
   local function CountSubstring( Text, Substring, Start, End )
-    --_Devpad_debug( 'local function CountSubstring( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
-    --_Devpad_debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+    --_DevPad_debug( 'local function CountSubstring( ' .. Text .. ' - ' .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
+    --_DevPad_debug( 'local function CountSubstring( '                  .. Substring .. ' - ' .. Start .. ' - ' .. End .. ' )' )
     if ( Start >= End ) then
       return 0
     end
@@ -369,7 +368,7 @@ do  --  TODO                                                            --  bunc
     while ( true ) do
       Start = Text:find( Substring, Start, true )
       if ( not Start or Start > End ) then
-        --_Devpad_debug( Count .. ' Substring found between cursor positions Start and End' )
+        --_DevPad_debug( Count .. ' Substring found between cursor positions Start and End' )
         return Count
       end
       Count = Count + 1
@@ -378,7 +377,7 @@ do  --  TODO                                                            --  bunc
   end
   --- Highlights a substring in the editor, accounting for escaped pipes.
   function NS.Edit:HighlightTextUnescaped( Start, End )
-    --_Devpad_debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
+    --_DevPad_debug( 'function NS.Edit:HighlightTextUnescaped( ' .. Start .. ' - ' .. End .. ' )' )
     if ( self.Lua ) then
       local PipesBeforeStart
       if ( Start or End ) then
@@ -395,12 +394,12 @@ do  --  TODO                                                            --  bunc
   end
   --- Forces the cursor into view the next time it moves, even if this editbox isn't focused.
   function NS.Edit:ScrollToNextCursorPosition()
-    --_Devpad_debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
+    --_DevPad_debug( 'function NS.Edit:ScrollToNextCursorPosition()' )
     self.CursorForceUpdate = true
   end
   --- Moves the cursor to a position in the current script, accounting for escaped pipes.
   function NS.Edit:SetCursorPositionUnescaped( Cursor )
-    --_Devpad_debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
+    --_DevPad_debug( 'function NS.Edit:SetCursorPositionUnescaped( ' .. Cursor .. ' )' )
     if ( self.Lua ) then
       Cursor = Cursor + CountSubstring( NS.Script._Text, '|', 0, Cursor )
     end
@@ -408,13 +407,13 @@ do  --  TODO                                                            --  bunc
   end
   --- @return Cursor position, ignoring extra pipe escape characters.
   function NS.Edit:GetCursorPositionUnescaped()
-    --_Devpad_debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
+    --_DevPad_debug( 'function NS.Edit:GetCursorPositionUnescaped()' )
     local Cursor = self:GetCursorPosition()
     if ( self.Lua ) then
       Cursor = Cursor - CountSubstring( self:GetText(), '||', 0, Cursor )
-      --_Devpad_debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
+      --_DevPad_debug( 'Cursor is saved at ' .. Cursor .. ' characters in.' )
     end
-    --_Devpad_debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
+    --_DevPad_debug( 'NS.Edit:GetCursorPositionUnescaped() - Cursor = ' .. Cursor )
     return Cursor
   end
 end
@@ -425,8 +424,8 @@ do  --  deal with pipes in text
   local BYTE_PIPE = ( '|' ):byte()
   local function IsPipeActive( Text, Position )
     -- @return True if the pipe at Position isn't escaped.
-    --_Devpad_debug( 'local function IsPipeActive( ' .. Text .. ' - ' .. Position .. ' )' )
-    --_Devpad_debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
+    --_DevPad_debug( 'local function IsPipeActive( ' .. Text .. ' - ' .. Position .. ' )' )
+    --_DevPad_debug( 'local function IsPipeActive( <text>, ' .. Position .. ' )' )
     local Pipes = 0
     for Index = Position, 1, -1 do
       if ( Text:byte( Index ) ~= BYTE_PIPE ) then
@@ -434,7 +433,7 @@ do  --  deal with pipes in text
       end
       Pipes = Pipes + 1
     end
-    --_Devpad_debug( 'Pipes ' .. Pipes )
+    --_DevPad_debug( 'Pipes ' .. Pipes )
     return Pipes % 2 == 1
   end
   local COLOR_LENGTH = 10
@@ -444,9 +443,9 @@ do  --  deal with pipes in text
   --   positions like visible characters, which is confusing.  On builds with
   --   debug assertions enabled, doing this crashes the game instead.
   function NS.Edit:ValidateCursorPosition( Cursor )
-    --_Devpad_debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
+    --_DevPad_debug( 'NS.Edit:ValidateCursorPosition( ' .. Cursor .. ' )' )
     if ( self.Lua ) then
-      _Devpad_debug( 'Pipes are escaped' )
+      _DevPad_debug( 'Pipes are escaped' )
       return Cursor
     end
     local Text = NS.Script._Text
@@ -455,16 +454,16 @@ do  --  deal with pipes in text
     end
     local __, End = Text:find( "^|[Rr]", Cursor + 1 )
     if ( End ) then -- Cursor is just before a color terminator
-      --_Devpad_debug( 'Cursor is just before a color terminator' )
+      --_DevPad_debug( 'Cursor is just before a color terminator' )
       Cursor = End
     elseif ( Cursor > 0 ) then
       local Start = Text:find( "|[Cc]%x%x%x%x%x%x%x%x", max( 1, Cursor - COLOR_LENGTH + 1 ) )
-      --_Devpad_debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
+      --_DevPad_debug( 'NS.Edit:ValidateCursorPosition() - Start: '  .. tostring( Start )  )
       if ( Start and Start <= Cursor ) then -- Cursor is in or just after a color code
         Cursor = Start - 1
       end
     end
-    --_Devpad_debug( 'NS.Edit:ValidateCursorPosition() - Cursor returned as: ' .. Cursor )
+    --_DevPad_debug( 'NS.Edit:ValidateCursorPosition() - Cursor returned as: ' .. Cursor )
     return Cursor
   end
 end
@@ -472,37 +471,36 @@ end
 
 
 do  --  Color and auto-tabbing
-  local function SetVertexColors( self, ... )  --  Sets both button textures' vertex colors.
+  local function SetVertexColors( self, ... )                           --  Sets both button textures' vertex colors.
     -- TODO? - debug text
     self:GetNormalTexture():SetVertexColor( ... )
     self:GetPushedTexture():SetVertexColor( ... )
   end
-  function NS:ScriptSetLua( _, Script )  --  Enables or disables syntax highlighting in the edit box.
+  function NS:ScriptSetLua( _, Script )                                 --  Enables or disables syntax highlighting in the edit box.
     -- TODO? - debug text
-    if ( Script == self.Script ) then
-      local Edit = self.Edit
-      if ( Script._Lua ) then
-        if ( not Edit.Lua ) then -- Escape control codes
-          SetVertexColors( self.Lua, 0.4, 0.8, 1 )
-          local Cursor = Edit:GetCursorPositionUnescaped()
-          Edit.Lua = true
-          Edit:SetText( self.Script._Text:gsub( '|', '||' ) )
-          Edit:SetCursorPositionUnescaped( Cursor )
-          if ( GUI.IndentationLib ) then
-            GUI.IndentationLib.Enable( Edit, -- Suppress immediate auto-indent
-              AUTO_INDENT_LUA_SCRIPTS and TAB_WIDTH, self.SyntaxColors, true )
-          end
-        end
-      elseif ( Edit.Lua ) then -- Disable syntax highlighting and unescape control codes
-        SetVertexColors( self.Lua, 0.4, 0.4, 0.4 )
-        if ( GUI.IndentationLib ) then
-          GUI.IndentationLib.Disable( Edit )
-        end
-        local Cursor = Edit:GetCursorPositionUnescaped()
-        Edit.Lua = false
-        Edit:SetText( self.Script._Text )
-        Edit:SetCursorPositionUnescaped( Edit:ValidateCursorPosition( Cursor ) )
+    if not Script == self.Script then return nil end
+    local Edit = self.Edit
+    if ( Script._Lua ) then
+      -- Escape control codes
+      SetVertexColors( self.Lua, 0.4, 0.8, 1 )
+      local Cursor = Edit:GetCursorPositionUnescaped()
+      Edit.Lua = true
+      Edit:SetText( self.Script._Text:gsub( '|', '||' ) )
+      Edit:SetCursorPositionUnescaped( Cursor )
+      if ( GUI.IndentationLib ) then
+        GUI.IndentationLib.Enable( Edit, -- Suppress immediate auto-indent
+          _DevPad_auto_indent_lua_scripts() and _DevPad_tab_width(), self.SyntaxColors, true )
       end
+    elseif ( Edit.Lua ) then
+      -- Disable syntax highlighting and unescape control codes
+      SetVertexColors( self.Lua, 0.4, 0.4, 0.4 )
+      if ( GUI.IndentationLib ) then
+        GUI.IndentationLib.Disable( Edit )
+      end
+      local Cursor = Edit:GetCursorPositionUnescaped()
+      Edit.Lua = false
+      Edit:SetText( self.Script._Text )
+      Edit:SetCursorPositionUnescaped( Edit:ValidateCursorPosition( Cursor ) )
     end
   end
 end
@@ -578,8 +576,8 @@ do  --  Title (top bar)
   --  Title text
   function NS:ObjectSetName( __, Object )
     if ( Object == self.Script ) then
-      _Devpad_debug( 'Updating the title to:' )
-      _Devpad_debug( Object._Name )
+      _DevPad_debug( 'Updating the title to:' )
+      _DevPad_debug( Object._Name )
       self.Title:SetText( Object._Name )
       NS.Title:SetPoint( 'TOPLEFT', NS.Run, 'TOPRIGHT', 0, -7 )
       NS.Title:SetJustifyH( 'LEFT' )

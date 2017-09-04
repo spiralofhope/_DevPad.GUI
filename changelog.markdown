@@ -6,6 +6,11 @@
 
 # 7.3 series
 
+## 7.3.0.5
+
+- Implemented #6 - Configuration
+
+
 ## 7.3.0.4
 
 - Fixed #1 - Cursor doesn't line up with active line

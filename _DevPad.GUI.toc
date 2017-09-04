@@ -23,7 +23,10 @@
 ## OptionalDeps:          FlyPaper
 ## LoadOnDemand:          1
 
+# For the editor window attaching to the main one
 Libs\FlyPaper\FlyPaper.lua
+
+# Automatic indentation
 Libs\ForAllIndentsAndPurposes\indent.lua
 
 # See http://wow.curseforge.com/addons/devpad/localization/
@@ -35,7 +38,7 @@ _DevPad.GUI.List.lua
 _DevPad.GUI.Editor.lua
 
 # Optional modules
-_DevPad.GUI.List.Search_optional.lua
-_DevPad.GUI.Editor.Color_optional.lua
-_DevPad.GUI.Editor.History_optional.lua
-_DevPad.GUI.Editor.LineNumbers_optional.lua
+#_DevPad.GUI.List.Search_optional.lua
+#_DevPad.GUI.Editor.Color_optional.lua
+#_DevPad.GUI.Editor.History_optional.lua
+#_DevPad.GUI.Editor.LineNumbers_optional.lua
