@@ -34,9 +34,11 @@ the load-on-demand GUI component of
 
 Since it's a regular addon, it's manually installed the same as every other addon would be.
 
-1) [Download _DevPad.GUI](https://github.com/spiralofhope/_DevPad.GUI/releases) 
+1) [Download _DevPad](https://github.com/spiralofhope/_DevPad/releases) 
+and
+   [Download _DevPad.GUI](https://github.com/spiralofhope/_DevPad.GUI/releases) 
 
-2) Extract it to your `Interface\AddOns` folder.
+2) Extract them to your `Interface\AddOns` folder.
 
 Perhaps your game is installed to one of:
 
@@ -47,11 +49,12 @@ Perhaps your game is installed to one of:
 
   `C:\Program Files\World of Warcraft\Interface\AddOns` 
 
-.. and so you would end up with the folder 
+.. and so you would end up with two separate folders, like:
 
+  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad`
   `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI`
 
-.. and inside it would have `_DevPad.GUI.toc` and all the other files.
+.. and inside them would be the files.
 
 
 - [Curse blog entry on manually installing AddOns](https://support.curse.com/hc/en-us/articles/204270005)
