@@ -6,6 +6,11 @@
 
 # 7.3 series
 
+## 7.3.0.4
+
+- Fixed #1 - Cursor doesn't line up with active line
+
+
 ## 7.3.0.3
 
 - Re-enabled the modules I disabled for testing.
