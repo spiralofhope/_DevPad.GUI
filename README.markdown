@@ -89,6 +89,20 @@ Notes will be forthcoming.
 I have created some fairly advanced scripts I'd like to add as examples.
 
 
+## Updating the built-in examples
+
+An outstanding feature is to have a separate location for examples, to have  
+[updateable documentation](https://github.com/spiralofhope/_DevPad/issues/7)
+
+For now, edit your `_DevPad.DefaultScripts.lua`.  Perhaps it is:
+
+  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad\_DevPad.DefaultScripts.lua`
+
+Each example script will be found therein.  The 
+[_DevPad changelog](https://github.com/spiralofhope/_DevPad/blob/master/changelog.markdown) 
+will be kept up-to-date with changes to the example scripts.
+
+
 
 # Problems and suggestions
 
