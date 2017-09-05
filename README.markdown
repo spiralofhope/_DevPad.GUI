@@ -1,19 +1,14 @@
-**NOTE:  This addon requires [_DevPad](https://github.com/spiralofhope/_DevPad)**
-
 # _DevPad.GUI
 
 An 
 [addon](http://blog.spiralofhope.com/?p=17845)
 for 
 [World of Warcraft](http://blog.spiralofhope.com/?p=2987).
-
 The GUI component for [_DevPad](https://github.com/spiralofhope/_DevPad), a notepad for Lua scripts and mini-addons.
 
-A fork of 
-[saiket's _DevPad](https://github.com/Saiket/wow-saiket/_DevPad.GUI).
+NOTE:  This addon requires [_DevPad](https://github.com/spiralofhope/_DevPad)
 
-The core component is 
-[_DevPad](https://github.com/spiralofhope/_DevPad)
+----
 
 [source code](https://github.com/spiralofhope/_DevPad.GUI)
  · [home page](http://blog.spiralofhope.com/?p=17397)
@@ -24,8 +19,9 @@ The core component is
 
 # Notes
 
-- This addon is largely unchanged from saiket's efforts!
-- I am a documentation guy, not a programmer.  It is unlikely I can make any real changes.
+- This is A fork of 
+[saiket's _DevPad.GUI](https://github.com/Saiket/wow-saiket/_DevPad.GUI).
+- I am a documentation guy, not a programmer.  It is unlikely I can make any large changes.
   -  If you are a developer, I am happy to:
      -  Accept GitHub pull requests.
      -  Add you as a contributor on GitHub.
