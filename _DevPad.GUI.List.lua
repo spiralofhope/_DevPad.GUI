@@ -431,8 +431,6 @@ end
 
 -- Updates an object's name text.
 function NS:ObjectSetName ( _, Object )
-  print( Object._Class )
-  local ObjectSetName_color = ''
 	if ( Object._Class ) then
 		return Object._ListButton.Name:SetText( Object._Name );
 	end
