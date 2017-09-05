@@ -525,14 +525,20 @@ do
 			local Object = self:GetParent():GetParent().Object;
 			return Object:SetAutoRun( not Object._AutoRun );
 		end
-		--- Shows the script's LuaDoc comment as a tooltip.
-		local function ScriptOnEnter ( self )
-			local Comment = ( self.Object._Text:match( "^%-%-%-([^\r\n]+)" ) or "" ):trim();
-			if ( Comment ~= "" ) then
-				GameTooltip:SetOwner( self, "ANCHOR_TOPLEFT" );
-				GameTooltip:SetText( Comment, nil, nil, nil, nil, 1 );
+
+		-- Show the script's top comment as a tooltip.
+		local function ScriptOnEnter( self )
+      --print( self.Object._Text )
+      local object_tooltip
+      regex='^%-%-([^\r\n]+)'
+			object_tooltip = ( self.Object._Text:match( regex ) or '' )
+      object_tooltip = object_tooltip:trim()
+			if ( object_tooltip ~= '' ) then
+				GameTooltip:SetOwner( self, 'ANCHOR_TOPLEFT' )
+				GameTooltip:SetText( object_tooltip, nil, nil, nil, nil, 1 )
 			end
 		end
+
 		--- @return A new script button.
 		function CreateScriptButton ()
 			local Button = CreateButton();

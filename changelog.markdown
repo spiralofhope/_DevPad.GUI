@@ -6,6 +6,11 @@
 
 # 7.3 series
 
+## 7.3.0.6
+
+- Fixed list tooltip functionality:  Comments at the top of a file are shown as a tooltip when mousing over the list.
+
+
 ## 7.3.0.5
 
 - Implemented #6 - Configuration
