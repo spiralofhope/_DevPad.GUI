@@ -8,6 +8,7 @@
 
 ## 7.3.0.6
 
+- Tinkered with #14 - Change the font of the main list
 - Fixed list tooltip functionality:  Comments at the top of a file are shown as a tooltip when mousing over the list.
 
 
