@@ -20,7 +20,7 @@ NOTE:  This addon requires [_DevPad](https://github.com/spiralofhope/_DevPad)
 # Notes
 
 - This is A fork of 
-[saiket's _DevPad.GUI](https://github.com/Saiket/wow-saiket/_DevPad.GUI).
+[saiket's _DevPad.GUI](https://github.com/Saiket/wow-saiket/tree/master/_DevPad.GUI).
 - I am a documentation guy, not a programmer.  It is unlikely I can make any large changes.
   -  If you are a developer, I am happy to:
      -  Accept GitHub pull requests.
