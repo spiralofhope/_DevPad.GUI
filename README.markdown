@@ -1,3 +1,5 @@
+**NOTE:  This addon requires [_DevPad](https://github.com/spiralofhope/_DevPad)**
+
 # _DevPad.GUI
 
 A 
@@ -96,7 +98,7 @@ I have created some fairly advanced scripts I'd like to add as examples.
   -  If you have multiple addons installed, errors you think are for one addon may actually be for another.  No really, disable everything else.
 - Search for your issue before creating an issue.
 - Always report errors.
-  -  There are several helpful addons to catch errors.  Try something like [TekErr](http://www.wowinterface.com/downloads/info6681).
+  -  There are several helpful addons to catch errors.  Try something like TekErr ([github](https://github.com/TekNoLogic/tekErr) &middot;  [wowinterface](http://www.wowinterface.com/downloads/info6681) &middot; [curse](https://mods.curse.com/project/103101) &middot; [curseforge](https://www.curseforge.com/projects/103101/))
 
 
 
@@ -106,4 +108,4 @@ I have created some fairly advanced scripts I'd like to add as examples.
   -  Final Warlords of Draenor patch.  The "pre-patch" for Legion.
 - [2012-08-27 - saiket's old releases](https://github.com/spiralofhope/_DevPad.GUI/archive/5.0.0.1.zip)
   -  *All* of [saiket](https://github.com/saiket/)'s releases, not just 5.0.0.1
-  - [saiket's fork on github](https://github.com/Saiket/wow-saiket/tree/master/_DevPad.GUI)
+  - [the original _DevPad.GUI](https://github.com/Saiket/wow-saiket/_DevPad.GUI), made by saiket
