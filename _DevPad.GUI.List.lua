@@ -431,8 +431,21 @@ end
 
 -- Updates an object's name text.
 function NS:ObjectSetName ( _, Object )
+  print( Object._Class )
+  local ObjectSetName_color = ''
+
+--[[
+  if _DevPad_options_colored_list() then
+    --TODO - Implement an Object._Class as 'Text'
+    if     ( Object._Class == 'Folder' ) then   ObjectSetName_color = ''
+    elseif ( Object._Class == 'Script' ) then   ObjectSetName_color = '|cff88bbdd'
+    --else                                        ObjectSetName_color = '|cff000000'
+    end
+  end
+]]
+
 	if ( Object._Class ) then
-		return Object._ListButton.Name:SetText( Object._Name );
+		return Object._ListButton.Name:SetText( ObjectSetName_color .. Object._Name .. '|r' );
 	end
 end
 
