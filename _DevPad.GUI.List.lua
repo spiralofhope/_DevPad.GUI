@@ -447,6 +447,7 @@ function NS:ObjectSetName ( _, Object )
     --print( _DevPad_options_font_size() )
     --Object._ListButton.Name:SetFont( fontName, _DevPad_options_font_size() )
     -- I am unable to make this configurable, because the following is fired only once when the GUI is loaded.  I'd need to implement a forced GUI reload or something.
+    -- See https://github.com/spiralofhope/_DevPad.GUI/issues/14
     Object._ListButton.Name:SetFont( fontName, 10 )
 		return Object._ListButton.Name:SetText( ObjectSetName_color .. Object._Name .. '|r' );
 	end
