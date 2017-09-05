@@ -391,14 +391,17 @@ do
 		NS:SetSelection( Object );
 		NS:SetRenaming( Object );
 	end
-	--- Creates a new script.
-	function NS.NewScript:OnClick ()
-		InsertObject( "Script" );
-	end
 	--- Creates a new folder.
 	function NS.NewFolder:OnClick ()
 		InsertObject( "Folder" );
 	end
+	--- Creates a new script.
+	function NS.NewScript:OnClick ()
+		InsertObject( "Script" );
+	end
+  -- TODO - InsertObject( 'Text' ) or some such, so that I can track Text separately, for:
+  --   1. Always display the top text.  That code is already in place.
+  --   2. Customise the item color in the list.  That code is already in place.
 end
 
 
@@ -426,12 +429,16 @@ do
 end
 
 
---- Updates an object's name text.
+-- Updates an object's name text.
 function NS:ObjectSetName ( _, Object )
-	if ( Object._ListButton ) then
+  print( Object._Class )
+  local ObjectSetName_color = ''
+	if ( Object._Class ) then
 		return Object._ListButton.Name:SetText( Object._Name );
 	end
 end
+
+
 do
 	local CreateFolderButton, CreateScriptButton;
 	do
@@ -528,7 +535,9 @@ do
 
 		-- Show the script's top comment as a tooltip.
 		local function ScriptOnEnter( self )
-      --print( self.Object._Text )
+      --debug( self.Object._Text )
+      -- How do I learn more about the object 'self'?  self.Object._Class doesn't exist.
+      --self.Object._Class == "Folder"
       local object_tooltip
       regex='^%-%-([^\r\n]+)'
 			object_tooltip = ( self.Object._Text:match( regex ) or '' )
