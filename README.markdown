@@ -2,16 +2,17 @@
 
 # _DevPad.GUI
 
-A 
-[World of Warcraft](http://blog.spiralofhope.com/?p=2987) 
-[addon](http://blog.spiralofhope.com/?p=17845).
+An 
+[addon](http://blog.spiralofhope.com/?p=17845)
+for 
+[World of Warcraft](http://blog.spiralofhope.com/?p=2987).
 
-A notepad for Lua scripts and mini-addons.
+The GUI component for [_DevPad](https://github.com/spiralofhope/_DevPad), a notepad for Lua scripts and mini-addons.
 
 A fork of 
-saiket's
-[_DevPad.GUI](https://github.com/Saiket/wow-saiket/tree/master/_DevPad.GUI),
-the load-on-demand GUI component of 
+[saiket's _DevPad](https://github.com/Saiket/wow-saiket/_DevPad.GUI).
+
+The core component is 
 [_DevPad](https://github.com/spiralofhope/_DevPad)
 
 [source code](https://github.com/spiralofhope/_DevPad.GUI)
@@ -56,7 +57,10 @@ Perhaps your game is installed to one of:
   `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad`
   `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI`
 
-.. and inside them would be the files.
+.. and inside them would be the files.  For example, you would have these two files:
+
+  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad\DevPad.toc`
+  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI\DevPad.toc`
 
 
 - [Curse blog entry on manually installing AddOns](https://support.curse.com/hc/en-us/articles/204270005)
@@ -69,8 +73,8 @@ Perhaps your game is installed to one of:
 
 - `/devpad` will open the GUI.
 - At the top-right of the window are icons.
-- Click the new script icon.
-- Type the name of your script.  To change a script name, double-click on the selected item on the left.
+- Click the `new script` icon.
+- Type the name of your script.  To change a script name, `double-click` on the selected item on the left.
 - Type your script on the right-window.
 - Within the right-window is an icon at its top-left, for running a script.
 
