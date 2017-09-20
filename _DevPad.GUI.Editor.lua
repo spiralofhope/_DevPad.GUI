@@ -78,6 +78,15 @@ do  --  Create basic frames
   do  --  The main area
     do  --  The editor
       NS.Edit         = CreateFrame( 'EditBox', nil, NS.ScrollChild )
+	  function NS.ChatEditInsertLink( Link, ... )
+	    if ( Link and NS.Edit:HasFocus() ) then
+			NS.Edit:Insert( NS.Edit.Lua and Link:gsub( '|', '||' ) or Link )
+			return true
+		end
+		return ChatEdit_InsertLink( Link, ... )
+	  end
+	  ChatEdit_InsertLink = NS.ChatEditInsertLink
+		
       NS.Edit:SetPoint( 'TOPLEFT', NS.TEXT_INSET, 0 )
       NS.Edit:SetPoint( 'RIGHT', NS.ScrollFrame )
       NS.Edit:SetAutoFocus( false )
