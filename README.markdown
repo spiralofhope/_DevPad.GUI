@@ -91,8 +91,8 @@ I have created some fairly advanced scripts I'd like to add as examples.
 
 ## Updating the built-in examples
 
-An outstanding feature is to have a separate location for examples, to have  
-[updateable documentation](https://github.com/spiralofhope/_DevPad/issues/7)
+An outstanding feature is to have a separate location for example scripts, to have 
+[updateable documentation](https://github.com/spiralofhope/_DevPad/issues/7).
 
 For now, edit your `_DevPad.DefaultScripts.lua`.  Perhaps it is:
 
