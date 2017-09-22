@@ -6,6 +6,12 @@
 
 # 7.3 series
 
+## 7.3.0.7
+
+- Done/implemented #19 - Investigate item linking in text areas
+  -  Thanks to casualshammy for the reminder
+
+
 ## 7.3.0.6
 
 - Tinkered with #14 - Change the font of the main list
