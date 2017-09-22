@@ -78,7 +78,7 @@ Perhaps your game is installed to one of:
 
 ## Intermediate Usage
 
-Notes will be forthcoming.
+See the included `usage.intermediate.markdown` for notes.
 
 
 
