@@ -10,6 +10,7 @@
 
 - Done/implemented #19 - Investigate item linking in text areas
   -  Thanks to casualshammy for the reminder
+- Began intermediate usage documentation in `usage.intermediate.markdown`
 
 
 ## 7.3.0.6
