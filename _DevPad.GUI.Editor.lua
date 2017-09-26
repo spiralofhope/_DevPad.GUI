@@ -88,36 +88,30 @@ do  --  Create basic frames
         --    - Change it from type "lua" to type "text"
         --    - Click in the editor area
         --    - Shift-click a spell icon from the spellbook
-        function NS.ChatEditInsertLink( Link, ... )
-          if GUI.List.RenameEdit:HasFocus() then
-            _DevPad_debug( 'not pasting a link into the name of an item' )
-            return true
-          end
+        local Backup = ChatEdit_InsertLink
+        --- Hook to add clicked links' code to the edit box.
+        function NS.ChatEditInsertLink ( Link, ... )
           if ( Link and NS.Edit:HasFocus() ) then
-            _DevPad_debug( 'pasting a link into the editor' )
             NS.Edit:Insert( NS.Edit.Lua and Link:gsub( '|', '||' ) or Link )
             return true
           end
-          return ChatEdit_InsertLink( Link, ... )
+          return Backup( Link, ... )
         end
-        ChatEdit_InsertLink = NS.ChatEditInsertLink
       end
 
 
---[[  FIXME - This is responsible for hanging the game.  A test case has not been built.
       do  --  Hook to keep the chat edit box open when focusing the editor.
-        function NS:ChatEditOnEditFocusLost( ... )
+        local Backup = ChatEdit_OnEditFocusLost
+        function NS:ChatEditOnEditFocusLost ( ... )
           if ( IsMouseButtonDown() ) then
             local Focus = GetMouseFocus()
             if ( Focus and ( Focus == NS.Edit or Focus == NS.Focus or Focus == NS.Margin ) ) then
               return -- Probably clicked the editor to change focus
             end
           end
-          return ChatEdit_OnEditFocusLost( self, ... )
+          return Backup( self, ... )
         end
-        ChatEdit_OnEditFocusLost = NS.ChatEditOnEditFocusLost
       end
---]]
 
 
       NS.Edit:SetPoint( 'TOPLEFT', NS.TEXT_INSET, 0 )
@@ -271,7 +265,6 @@ do  --  Create basic frames
       end
     end
 
-
     do  -- Cursor line highlight
       NS.Edit.Line    = NS.Edit:CreateTexture()
       NS.Edit.Line:SetPoint( 'LEFT', Margin )
@@ -289,9 +282,8 @@ do  --  Create basic frames
   --  NS.Background was never implemented
   --NS.Background:SetColorTexture( 0.05, 0.05, 0.06 ) -- Text background
 end
-
-
-
+ChatEdit_InsertLink = NS.ChatEditInsertLink
+ChatEdit_OnEditFocusLost = NS.ChatEditOnEditFocusLost
 
 
 
@@ -679,6 +671,9 @@ do  --  Title (top bar)
   SetupTitleButton( NS.FontIncrease, GUI.L.FONT_INCREASE )
   SetupTitleButton( NS.FontDecrease, GUI.L.FONT_DECREASE )
 end
+
+
+
 
 
 
