@@ -6,6 +6,11 @@
 
 # 7.3 series
 
+## 7.3.2.0
+
+- TOC bump
+
+
 ## 7.3.0.8
 
 - Audited #19 - Investigate item linking in text areas
