@@ -4,7 +4,7 @@
 
 # The interface number can be learned with:
 #   /dump select( 4, GetBuildInfo() )
-## Interface:             70300
+## Interface:             80000
 ## Title:                 _|cffCCCC88DevPad|r.GUI
 ## Notes:                 Script list and editor for _|cffCCCC88DevPad|r.
 ## Author:                Saiket, spiralofhope

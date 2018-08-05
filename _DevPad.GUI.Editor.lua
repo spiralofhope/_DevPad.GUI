@@ -674,10 +674,6 @@ end
 
 
 
-
-
-
-
 -- TODO - Simplify
 --   All of this seems overly complex, and simpler code could be borrowed from elsewhere.
 do
