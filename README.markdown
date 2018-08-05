@@ -50,12 +50,12 @@ Perhaps your game is installed to one of:
 
 .. and so you would end up with two separate folders, like:
 
-  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad`
+  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad` <br />
   `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI`
 
 .. and inside them would be the files.  For example, you would have these two files:
 
-  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad\DevPad.toc`
+  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad\DevPad.toc` <br />
   `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI\DevPad.toc`
 
 
@@ -78,7 +78,7 @@ Perhaps your game is installed to one of:
 
 ## Intermediate Usage
 
-Notes will be forthcoming.
+See the included `usage.intermediate.markdown` for notes.
 
 
 
@@ -91,8 +91,8 @@ I have created some fairly advanced scripts I'd like to add as examples.
 
 ## Updating the built-in examples
 
-An outstanding feature is to have a separate location for examples, to have  
-[updateable documentation](https://github.com/spiralofhope/_DevPad/issues/7)
+An outstanding feature is to have a separate location for example scripts, to have 
+[updateable documentation](https://github.com/spiralofhope/_DevPad/issues/7).
 
 For now, edit your `_DevPad.DefaultScripts.lua`.  Perhaps it is:
 

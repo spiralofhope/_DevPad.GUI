@@ -6,6 +6,24 @@
 
 # 7.3 series
 
+## 7.3.2.0
+
+- TOC bump
+
+
+## 7.3.0.8
+
+- Audited #19 - Investigate item linking in text areas
+  -  Reverted some code to the original author's implementation.  This fixes a freeze issue.
+  -  See also #23 - Reproduce linking freeze
+
+## 7.3.0.7
+
+- Done/implemented #19 - Investigate item linking in text areas
+  -  Thanks to casualshammy for the reminder
+- Began intermediate usage documentation in `usage.intermediate.markdown`
+
+
 ## 7.3.0.6
 
 - Tinkered with #14 - Change the font of the main list

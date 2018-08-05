@@ -78,15 +78,42 @@ do  --  Create basic frames
   do  --  The main area
     do  --  The editor
       NS.Edit         = CreateFrame( 'EditBox', nil, NS.ScrollChild )
-	  function NS.ChatEditInsertLink( Link, ... )
-	    if ( Link and NS.Edit:HasFocus() ) then
-			NS.Edit:Insert( NS.Edit.Lua and Link:gsub( '|', '||' ) or Link )
-			return true
-		end
-		return ChatEdit_InsertLink( Link, ... )
-	  end
-	  ChatEdit_InsertLink = NS.ChatEditInsertLink
-		
+
+
+      do  --  Hook to add clicked links' code to the edit box.
+        --  Test case:
+        --    - Open the spell book (perhaps with the hotkey `p`)
+        --    - Open DevPad (`enter` `/devpad`)
+        --    - Create a new item
+        --    - Change it from type "lua" to type "text"
+        --    - Click in the editor area
+        --    - Shift-click a spell icon from the spellbook
+        local Backup = ChatEdit_InsertLink
+        --- Hook to add clicked links' code to the edit box.
+        function NS.ChatEditInsertLink ( Link, ... )
+          if ( Link and NS.Edit:HasFocus() ) then
+            NS.Edit:Insert( NS.Edit.Lua and Link:gsub( '|', '||' ) or Link )
+            return true
+          end
+          return Backup( Link, ... )
+        end
+      end
+
+
+      do  --  Hook to keep the chat edit box open when focusing the editor.
+        local Backup = ChatEdit_OnEditFocusLost
+        function NS:ChatEditOnEditFocusLost ( ... )
+          if ( IsMouseButtonDown() ) then
+            local Focus = GetMouseFocus()
+            if ( Focus and ( Focus == NS.Edit or Focus == NS.Focus or Focus == NS.Margin ) ) then
+              return -- Probably clicked the editor to change focus
+            end
+          end
+          return Backup( self, ... )
+        end
+      end
+
+
       NS.Edit:SetPoint( 'TOPLEFT', NS.TEXT_INSET, 0 )
       NS.Edit:SetPoint( 'RIGHT', NS.ScrollFrame )
       NS.Edit:SetAutoFocus( false )
@@ -238,7 +265,6 @@ do  --  Create basic frames
       end
     end
 
-
     do  -- Cursor line highlight
       NS.Edit.Line    = NS.Edit:CreateTexture()
       NS.Edit.Line:SetPoint( 'LEFT', Margin )
@@ -256,9 +282,8 @@ do  --  Create basic frames
   --  NS.Background was never implemented
   --NS.Background:SetColorTexture( 0.05, 0.05, 0.06 ) -- Text background
 end
-
-
-
+ChatEdit_InsertLink = NS.ChatEditInsertLink
+ChatEdit_OnEditFocusLost = NS.ChatEditOnEditFocusLost
 
 
 
@@ -646,38 +671,6 @@ do  --  Title (top bar)
   SetupTitleButton( NS.FontIncrease, GUI.L.FONT_INCREASE )
   SetupTitleButton( NS.FontDecrease, GUI.L.FONT_DECREASE )
 end
-
-
-
-
-
--- Apparently not used:
---[[
---- Hook to add clicked links' code to the edit box.
-function NS.ChatEditInsertLink( Link, ... )
-  if ( Link and NS.Edit:HasFocus() ) then
-    NS.Edit:Insert( NS.Edit.Lua and Link:gsub( '|', '||' ) or Link )
-    return true
-  end
-  return ChatEdit_InsertLink( Link, ... )
-end
-ChatEdit_InsertLink = NS.ChatEditInsertLink
-]]
-
--- Apparently not used:
---[[
---- Hook to keep the chat edit box open when focusing the editor.
-function NS:ChatEditOnEditFocusLost( ... )
-  if ( IsMouseButtonDown() ) then
-    local Focus = GetMouseFocus()
-    if ( Focus and ( Focus == NS.Edit or Focus == NS.Focus or Focus == NS.Margin ) ) then
-      return -- Probably clicked the editor to change focus
-    end
-  end
-  return ChatEdit_OnEditFocusLost( self, ... )
-end
-]]
---ChatEdit_OnEditFocusLost = NS.ChatEditOnEditFocusLost
 
 
 
