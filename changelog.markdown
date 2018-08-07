@@ -4,6 +4,13 @@
 
 
 
+# 8.1 series
+
+## 8.0.1.1
+
+- Fixed  #26 - Re-implemented linking functionality to non-script texts.
+
+
 # 7.3 series
 
 ## 7.3.2.0
