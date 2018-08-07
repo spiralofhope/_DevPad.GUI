@@ -8,7 +8,7 @@
 ## Title:                 _|cffCCCC88DevPad|r.GUI
 ## Notes:                 Script list and editor for _|cffCCCC88DevPad|r.
 ## Author:                Saiket, spiralofhope
-## Version:               8.0.1.1
+## Version:               8.0.1.2
 ## X-Date:                2018-08-07
 ## X-Category:            Development Tools
 ## X-License:             GPLv3
