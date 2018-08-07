@@ -6,6 +6,12 @@
 
 # 8.1 series
 
+# 8.0.1.2
+
+- Reformatted to convert tabs to spaces.
+  -  This will make it far easier to accept pull requests.
+
+
 ## 8.0.1.1
 
 - Fixed  #26 - Re-implemented linking functionality to non-script texts.
