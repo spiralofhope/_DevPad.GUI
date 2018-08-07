@@ -1,15 +1,15 @@
 # _DevPad.GUI has most recently been tested against:
-#   Version 7.3.5 (26365) (Release x64)
-#   Apr 3 2018
+#   Version 8.0.1 (27219) (Release x64)
+#   Jul 30 2018
 
 # The interface number can be learned with:
 #   /dump select( 4, GetBuildInfo() )
-## Interface:             70300
+## Interface:             80000
 ## Title:                 _|cffCCCC88DevPad|r.GUI
 ## Notes:                 Script list and editor for _|cffCCCC88DevPad|r.
 ## Author:                Saiket, spiralofhope
-## Version:               7.3.2.0
-## X-Date:                2018-05-08
+## Version:               8.0.1.1
+## X-Date:                2018-08-07
 ## X-Category:            Development Tools
 ## X-License:             GPLv3
 ## X-Website:             https://github.com/spiralofhope/_DevPad.GUI/
