@@ -8,6 +8,8 @@
 
 # 8.0.1.2
 
+- Fixed #25 - Revisit scaling
+  -  Apparently fixed at Blizzard's end.
 - Reformatted to convert tabs to spaces.
   -  This will make it far easier to accept pull requests.
 
