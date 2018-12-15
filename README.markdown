@@ -46,17 +46,17 @@ Perhaps your game is installed to one of:
 
 .. and so you would extract the contents of your downloaded archive to something like:
 
-  `C:\Program Files\World of Warcraft\Interface\AddOns` 
+  `C:\Program Files\World of Warcraft\_retail_\Interface\AddOns` 
 
 .. and so you would end up with two separate folders, like:
 
-  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad` <br />
-  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI`
+  `C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\_DevPad` <br />
+  `C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\_DevPad.GUI`
 
 .. and inside them would be the files.  For example, you would have these two files:
 
-  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad\DevPad.toc` <br />
-  `C:\Program Files\World of Warcraft\Interface\AddOns\_DevPad.GUI\DevPad.toc`
+  `C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\_DevPad\DevPad.toc` <br />
+  `C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\_DevPad.GUI\DevPad.toc`
 
 
 - [Curse blog entry on manually installing AddOns](https://support.curse.com/hc/en-us/articles/204270005)
