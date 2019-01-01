@@ -1,27 +1,32 @@
 # _DevPad.GUI has most recently been tested against:
-#   Version 8.0.1 (27219) (Release x64)
-#   Jul 30 2018
+#   Version 8.1.0 (28833) (Release x64)
+#   Dec 19 2018
 
 # The interface number can be learned with:
 #   /dump select( 4, GetBuildInfo() )
-## Interface:             80000
+## Interface:             80100
 ## Title:                 _|cffCCCC88DevPad|r.GUI
+## X-Category:            Development Tools
 ## Notes:                 Script list and editor for _|cffCCCC88DevPad|r.
 ## Author:                Saiket, spiralofhope
-## Version:               8.0.1.2
-## X-Date:                2018-08-07
-## X-Category:            Development Tools
-## X-License:             GPLv3
+## Version:               8.1.0.0
+## X-Date:                2018-12-31
 ## X-Website:             https://github.com/spiralofhope/_DevPad.GUI/
 ## X-Feedback:            https://github.com/spiralofhope/_DevPad.GUI/issues/new
-## X-Child-Of:            _DevPad
-## X-Localizations:       enUS
-## X-CompatibleLocales:   deDE, enCN, enTW, enUS, esES, esMX, frFR, koKR, ptBR, ptPT, ruRU, zhCN, zhTW
-## X-Embeds:              FlyPaper
+## X-License:             GPLv3
+
 ## SavedVariables:        _DevPadGUIOptions
+## DefaultState:          enabled
 ## RequiredDeps:          _DevPad
 ## OptionalDeps:          FlyPaper
+## X-Child-Of:            _DevPad
+## X-Embeds:              FlyPaper
 ## LoadOnDemand:          1
+
+## X-Localizations:       enUS
+## X-CompatibleLocales:   deDE, enCN, enTW, enUS, esES, esMX, frFR, koKR, ptBR, ptPT, ruRU, zhCN, zhTW
+
+
 
 # For the editor window attaching to the main one
 Libs\FlyPaper\FlyPaper.lua

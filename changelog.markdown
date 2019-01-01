@@ -6,6 +6,11 @@
 
 # 8.1 series
 
+## 8.1.0.0
+
+- TOC bump
+
+
 # 8.0.1.2
 
 - Fixed #25 - Revisit scaling
