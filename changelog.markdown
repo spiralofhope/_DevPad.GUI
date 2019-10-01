@@ -4,6 +4,13 @@
 
 
 
+# 8.2 series
+
+## 8.2.5
+
+- Style update
+
+ 
 # 8.1 series
 
 ## 8.1.0.0
