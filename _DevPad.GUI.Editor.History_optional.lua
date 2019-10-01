@@ -9,9 +9,9 @@ local _DevPad, GUI = _DevPad, select( 2, ... );
 local NS = {};
 GUI.Editor.History = NS;
 
-NS.UndoButton = CreateFrame( "Button", nil, GUI.Editor );
-NS.RedoButton = CreateFrame( "Button", nil, GUI.Editor );
-NS.CompareTimer = CreateFrame( "Frame", nil, GUI.Editor ):CreateAnimationGroup();
+NS.UndoButton = CreateFrame( 'Button', nil, GUI.Editor );
+NS.RedoButton = CreateFrame( 'Button', nil, GUI.Editor );
+NS.CompareTimer = CreateFrame( 'Frame', nil, GUI.Editor ):CreateAnimationGroup();
 
 local COMPARE_INTERVAL = 0.5; -- Time to wait after last keypress before recomparing
 NS.MaxEntries = 128; -- Use math.huge for unlimited history, or delete this file to disable history
@@ -71,7 +71,7 @@ end
 --- Undoes/redoes a change to the script with <ctrl+z> and <ctrl+shift+Z>.
 function GUI.Editor.Shortcuts:Z ()
   if ( IsControlKeyDown() ) then
-    return NS[ IsShiftKeyDown() and "Redo" or "Undo" ]( NS, NS.Script );
+    return NS[ IsShiftKeyDown() and 'Redo' or 'Undo' ]( NS, NS.Script );
   end
 end
 
@@ -155,7 +155,7 @@ do
     local Prefix = Script._Text:sub( 1, Start - 1 );
     local Suffix = Script._Text:sub( Start + #MiddleCurrent );
 
-    local Text = ( "" ):join( Prefix, MiddleNew, Suffix );
+    local Text = ( '' ):join( Prefix, MiddleNew, Suffix );
     Script._HistoryText = Text; -- Prevent the undo/redo from counting as a new edit
     Script:SetText( Text );
     if ( NS.Script == Script ) then -- Move cursor to just after replaced text
@@ -210,9 +210,9 @@ local function SetupButton ( Button )
   Button:SetHighlightTexture( [[Interface\BUTTONS\UI-ScrollBar-Button-Overlay]] );
   Button:GetHighlightTexture():SetVertexColor( 1, 0, 0 );
   Button:SetMotionScriptsWhileDisabled( true );
-  Button:SetScript( "OnEnter", GUI.Dialog.ControlOnEnter );
-  Button:SetScript( "OnLeave", GameTooltip_Hide );
-  Button:SetScript( "OnClick", Button.OnClick );
+  Button:SetScript( 'OnEnter', GUI.Dialog.ControlOnEnter );
+  Button:SetScript( 'OnLeave', GameTooltip_Hide );
+  Button:SetScript( 'OnClick', Button.OnClick );
 end
 
 -- Title buttons
@@ -231,8 +231,8 @@ Undo:GetPushedTexture():SetTexCoord( 1, 0, 0, 1 );
 Undo:GetDisabledTexture():SetTexCoord( 1, 0, 0, 1 );
 
 
-NS.CompareTimer:CreateAnimation( "Animation" ):SetDuration( COMPARE_INTERVAL );
-NS.CompareTimer:SetScript( "OnFinished", NS.CompareTimer.OnFinished );
+NS.CompareTimer:CreateAnimation( 'Animation' ):SetDuration( COMPARE_INTERVAL );
+NS.CompareTimer:SetScript( 'OnFinished', NS.CompareTimer.OnFinished );
 
-_DevPad.RegisterCallback( NS, "ScriptSetText" );
-GUI.RegisterCallback( NS, "EditorSetScriptObject" );
+_DevPad.RegisterCallback( NS, 'ScriptSetText' );
+GUI.RegisterCallback( NS, 'EditorSetScriptObject' );

@@ -7,10 +7,10 @@
 local _DevPad, GUI = _DevPad, select( 2, ... );
 local Editor = GUI.Editor;
 
-local NS = CreateFrame( "Frame", nil, Editor.ScrollChild );
+local NS = CreateFrame( 'Frame', nil, Editor.ScrollChild );
 Editor.LineNumbers = NS;
 
-NS.Gutter = Editor.Focus:CreateTexture( nil, "BORDER" ); -- Behind line highlight
+NS.Gutter = Editor.Focus:CreateTexture( nil, 'BORDER' ); -- Behind line highlight
 NS.Text = NS:CreateFontString();
 NS.Lines = {};
 local UPDATE_INTERVAL = 0.2; -- Time to wait after last keypress before updating
@@ -39,11 +39,11 @@ end
 function NS:EditorSetScriptObject ( Script )
   if ( Script ) then
     self:Update();
-    _DevPad.RegisterCallback( self, "ScriptSetLua" );
-    GUI.RegisterCallback( self, "EditorSetFont" );
+    _DevPad.RegisterCallback( self, 'ScriptSetLua' );
+    GUI.RegisterCallback( self, 'EditorSetFont' );
   else
-    _DevPad.UnregisterCallback( self, "ScriptSetLua" );
-    GUI.UnregisterCallback( self, "EditorSetFont" );
+    _DevPad.UnregisterCallback( self, 'ScriptSetLua' );
+    GUI.UnregisterCallback( self, 'EditorSetFont' );
   end
 end
 function NS:ScriptSetLua ( _, Script )
@@ -59,9 +59,9 @@ do
   local function OnFinished ( Updater )
     return NS:Update();
   end
-  local Updater = CreateFrame( "Frame", nil, NS ):CreateAnimationGroup();
-  Updater:CreateAnimation( "Animation" ):SetDuration( UPDATE_INTERVAL );
-  Updater:SetScript( "OnFinished", OnFinished );
+  local Updater = CreateFrame( 'Frame', nil, NS ):CreateAnimationGroup();
+  Updater:CreateAnimation( 'Animation' ):SetDuration( UPDATE_INTERVAL );
+  Updater:SetScript( 'OnFinished', OnFinished );
   --- Restarts an update timer when text changes.
   function NS:OnTextChanged ()
     if ( Editor.Script ) then
@@ -91,7 +91,7 @@ function NS:Update ()
       Text:SetText( Line );
       for Extra = 1, Text:GetStringWidth() / Width do
         Index = Index + 1;
-        Lines[ Index ] = "";
+        Lines[ Index ] = '';
       end
     end
   end
@@ -114,7 +114,7 @@ function NS:OnMouseDown ()
   local Lines = self.Lines;
   local Index = max( 1, min( #Lines, ceil( Offset / Editor.Edit.LineHeight ) ) );
   -- Seek up to start of line
-  while ( Lines[ Index ] == "" ) do
+  while ( Lines[ Index ] == '' ) do
     Index = Index - 1;
   end
   local Line = Lines[ Index ] or 1;
@@ -165,7 +165,7 @@ function Editor.Shortcuts:G ()
       end
     end
 
-    local Dialog = StaticPopup_Show( "_DEVPAD_GOTO", LineMax );
+    local Dialog = StaticPopup_Show( '_DEVPAD_GOTO', LineMax );
     if ( Dialog ) then
       Dialog.editBox:SetNumeric( true );
       Dialog.editBox:SetNumber( LineCurrent );
@@ -175,12 +175,12 @@ function Editor.Shortcuts:G ()
 end
 
 
-StaticPopupDialogs[ "_DEVPAD_GOTO" ] = {
+StaticPopupDialogs[ '_DEVPAD_GOTO' ] = {
   text = GUI.L.GOTO_FORMAT;
   button1 = ACCEPT; button2 = CANCEL;
   OnAccept = NS.GoToOnAccept; OnHide = NS.GoToOnHide;
   EditBoxOnEnterPressed = NS.GoToOnEnterPressed;
-  EditBoxOnEscapePressed = StaticPopupDialogs[ "ADD_FRIEND" ].EditBoxOnEscapePressed;
+  EditBoxOnEscapePressed = StaticPopupDialogs[ 'ADD_FRIEND' ].EditBoxOnEscapePressed;
   hasEditBox = true; timeout = 0; hideOnEscape = true; whileDead = true;
 };
 
@@ -188,18 +188,18 @@ StaticPopupDialogs[ "_DEVPAD_GOTO" ] = {
 
 
 NS:SetSize( 1, 1 );
-NS:SetPoint( "TOPLEFT" );
+NS:SetPoint( 'TOPLEFT' );
 NS:SetHitRectInsets( 0, 0, 0, Editor.TEXT_INSET );
-NS:SetScript( "OnMouseDown", NS.OnMouseDown );
+NS:SetScript( 'OnMouseDown', NS.OnMouseDown );
 NS.Text:SetFontObject( Editor.Font );
-NS.Text:SetPoint( "TOPLEFT", 0, -Editor.TEXT_INSET );
-NS.Text:SetJustifyV( "TOP" );
-NS.Text:SetJustifyH( "RIGHT" );
+NS.Text:SetPoint( 'TOPLEFT', 0, -Editor.TEXT_INSET );
+NS.Text:SetJustifyV( 'TOP' );
+NS.Text:SetJustifyH( 'RIGHT' );
 
-Editor.Edit:SetPoint( "TOPLEFT", NS, "TOPRIGHT" );
-Editor.Edit:HookScript( "OnTextChanged", NS.OnTextChanged );
-NS.Gutter:SetPoint( "TOPLEFT" );
-NS.Gutter:SetPoint( "RIGHT", Editor.Edit, "LEFT", -4, 0 );
-NS.Gutter:SetPoint( "BOTTOM" );
+Editor.Edit:SetPoint( 'TOPLEFT', NS, 'TOPRIGHT' );
+Editor.Edit:HookScript( 'OnTextChanged', NS.OnTextChanged );
+NS.Gutter:SetPoint( 'TOPLEFT' );
+NS.Gutter:SetPoint( 'RIGHT', Editor.Edit, 'LEFT', -4, 0 );
+NS.Gutter:SetPoint( 'BOTTOM' );
 
-GUI.RegisterCallback( NS, "EditorSetScriptObject" );
+GUI.RegisterCallback( NS, 'EditorSetScriptObject' );

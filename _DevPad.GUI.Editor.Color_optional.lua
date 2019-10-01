@@ -9,11 +9,11 @@ local _DevPad, GUI = _DevPad, select( 2, ... );
 local NS = {};
 GUI.Editor.Color = NS;
 
-NS.ButtonContainer = CreateFrame( "Frame", nil, GUI.Editor );
-NS.Swatch = CreateFrame( "Button", nil, NS.ButtonContainer );
+NS.ButtonContainer = CreateFrame( 'Frame', nil, GUI.Editor );
+NS.Swatch = CreateFrame( 'Button', nil, NS.ButtonContainer );
 NS.Dropper = GUI.Editor:NewButton( [[Interface\AddOns\]]..( ... )..[[\Skin\ColorDropper]] );
-NS.Dropdown = CreateFrame( "Frame", nil, NS.Swatch );
-NS.Dropdown.Custom = CreateFrame( "Button", nil, NS.Dropdown, "UIPanelButtonTemplate" );
+NS.Dropdown = CreateFrame( 'Frame', nil, NS.Swatch );
+NS.Dropdown.Custom = CreateFrame( 'Button', nil, NS.Dropdown, 'UIPanelButtonTemplate' );
 
 
 
@@ -38,11 +38,11 @@ do
   function NS:EditorSetScriptObject ( _, Script )
     self.Script = Script;
     if ( Script ) then
-      _DevPad.RegisterCallback( self, "ScriptSetLua" );
+      _DevPad.RegisterCallback( self, 'ScriptSetLua' );
       self:ScriptSetLua( nil, Script );
     else
       self.Enabled = false;
-      _DevPad.UnregisterCallback( self, "ScriptSetLua" );
+      _DevPad.UnregisterCallback( self, 'ScriptSetLua' );
       UpdateEnabled( self );
     end
   end
@@ -123,7 +123,7 @@ do
     local Text, Cursor = self:GetText(), self:GetCursorPosition();
     -- Note: If cursor is in a link, this technique fails; Move out of potential links first.
     self:SetCursorPosition( 0 );
-    self:Insert( "" ); -- Delete selected text
+    self:Insert( '' ); -- Delete selected text
     local TextNew, CursorNew = self:GetText(), self:GetCursorPosition();
     local Start, End = CursorNew, #Text - ( #TextNew - CursorNew );
     -- Restore previous text
@@ -171,7 +171,7 @@ do
     local ColorStart = GUI.FormatColorCode( R, G, B );
     local ColorDefault = GUI.FormatColorCode( Edit:GetTextColor() );
     if ( ColorStart == ColorDefault ) then
-      ColorStart = "";
+      ColorStart = '';
     end
 
     local Start, End = GetTextHighlight( Edit );
@@ -191,20 +191,20 @@ do
     end
 
     -- Find active color codes at the edges of the selection
-    local ColorStartOld = End > 0 and GetActiveColor( Text, Start ) or "";
-    local ColorEndOld = End < #Text and GetActiveColor( Text, End ) or "";
+    local ColorStartOld = End > 0 and GetActiveColor( Text, Start ) or '';
+    local ColorEndOld = End < #Text and GetActiveColor( Text, End ) or '';
     local ColorEnd = ColorEndOld;
     -- Optimizations to avoid unnecessary color codes
     if ( ColorEndOld == ColorStart -- End of selection is already this color
       or Text:find( "^|[Cc]%x%x%x%x%x%x%x%x", End + 1 ) -- Color changes just after selection
     ) then
-      ColorEnd = "";
-    elseif ( ColorEndOld == "" and ColorStart ~= "" ) then
+      ColorEnd = '';
+    elseif ( ColorEndOld == '' and ColorStart ~= '' ) then
       ColorEnd = TERMINATOR; -- Transitioning out of color
     end
     if ( ColorStartOld == ColorStart ) then
-      ColorStart = ""; -- Beginning of selection is already this color
-    elseif ( ColorStartOld ~= "" and ColorStart == "" ) then
+      ColorStart = ''; -- Beginning of selection is already this color
+    elseif ( ColorStartOld ~= '' and ColorStart == '' ) then
       ColorStart = TERMINATOR; -- Transitioning out of color
     end
 
@@ -212,7 +212,7 @@ do
     -- Remove color codes from the selection
     local Replacement, CursorReplacement = StripColors( Selection, Cursor - Start );
 
-    self.Script:SetText( ( "" ):join(
+    self.Script:SetText( ( '' ):join(
       Text:sub( 1, Start ),
       ColorStart, Replacement, ColorEnd,
       Text:sub( End + 1 ) ) );
@@ -255,7 +255,7 @@ end
 --- Highlights selected text when left clicked, or opens dropdown on right click.
 function NS.Swatch:OnClick ( Button )
   PlaySound( 856 )                                                      --  igMainMenuOptionCheckBoxOn / IG_MAINMENU_OPTION_CHECKBOX_ON
-  if ( Button == "RightButton" ) then
+  if ( Button == 'RightButton' ) then
     return ToggleFrame( NS.Dropdown );
   end
   NS:ColorSelection( NS.R, NS.G, NS.B );
@@ -337,32 +337,32 @@ end
 -- Title buttons
 local Container = NS.ButtonContainer;
 Container:Hide();
-Container:SetScript( "OnShow", Container.OnShow );
-Container:SetScript( "OnHide", Container.OnHide );
+Container:SetScript( 'OnShow', Container.OnShow );
+Container:SetScript( 'OnHide', Container.OnHide );
 Container:SetHeight( 1 );
 --- Configures this button as a color swatch.
 local function SetupSwatch ( self )
   self:SetSize( 16, 16 );
-  self.Outline = self:CreateTexture( nil, "BACKGROUND" );
-  self.Outline:SetPoint( "TOPLEFT", 1, -1 );
-  self.Outline:SetPoint( "BOTTOMRIGHT", -1, 1 );
+  self.Outline = self:CreateTexture( nil, 'BACKGROUND' );
+  self.Outline:SetPoint( 'TOPLEFT', 1, -1 );
+  self.Outline:SetPoint( 'BOTTOMRIGHT', -1, 1 );
   self:SetNormalTexture( [[Interface\ChatFrame\ChatFrameColorSwatch]] );
-  self:SetScript( "OnEnter", NS.SwatchOnEnter );
-  self:SetScript( "OnLeave", NS.SwatchOnLeave );
+  self:SetScript( 'OnEnter', NS.SwatchOnEnter );
+  self:SetScript( 'OnLeave', NS.SwatchOnLeave );
   NS.SwatchOnLeave( self ); -- Initialize outline
   return self;
 end
 local Swatch = NS.Swatch;
 SetupSwatch( Swatch );
-Swatch:SetPoint( "RIGHT" );
-Swatch:RegisterForClicks( "LeftButtonUp", "RightButtonUp" );
-Swatch:SetScript( "OnClick", Swatch.OnClick );
+Swatch:SetPoint( 'RIGHT' );
+Swatch:RegisterForClicks( 'LeftButtonUp', 'RightButtonUp' );
+Swatch:SetScript( 'OnClick', Swatch.OnClick );
 Swatch.tooltipText = GUI.L.COLOR_SWATCH;
 local Dropper = NS.Dropper;
 Dropper:SetParent( Container );
 Dropper:SetHitRectInsets( 2, 2, 2, 2 );
-Dropper:SetPoint( "LEFT" );
-Dropper:SetScript( "OnClick", Dropper.OnClick );
+Dropper:SetPoint( 'LEFT' );
+Dropper:SetScript( 'OnClick', Dropper.OnClick );
 Dropper.tooltipText = GUI.L.COLOR_DROPPER;
 Container.Padding, Container.Width = -8, Swatch:GetWidth() + Dropper:GetWidth();
 Container:OnHide();
@@ -372,7 +372,7 @@ GUI.Editor:AddTitleButton( Container, Container.Padding );
 local Dropdown = NS.Dropdown;
 Dropdown:Hide();
 Dropdown:SetSize( 92, 74 );
-Dropdown:SetPoint( "TOPLEFT", Swatch, "BOTTOMLEFT", -12, 2 );
+Dropdown:SetPoint( 'TOPLEFT', Swatch, 'BOTTOMLEFT', -12, 2 );
 Dropdown:SetBackdrop( {
   edgeFile = [[Interface\DialogFrame\UI-DialogBox-Border]];
   bgFile = [[Interface\DialogFrame\UI-DialogBox-Background-Dark]];
@@ -385,42 +385,42 @@ Dropdown:SetBackdropBorderColor( Border.r, Border.g, Border.b );
 Dropdown:EnableMouse( true );
 Dropdown:SetClampedToScreen( true );
 Dropdown:SetFrameLevel( Dropdown:GetFrameLevel() + 10 ); -- Above editbox
-Dropdown:SetScript( "OnUpdate", Dropdown.OnUpdate );
+Dropdown:SetScript( 'OnUpdate', Dropdown.OnUpdate );
 --- @return A color swatch button initialized to R, G, B.
 local function CreatePreset ( Color )
-  local Swatch = SetupSwatch( CreateFrame( "Button", nil, Dropdown ) );
+  local Swatch = SetupSwatch( CreateFrame( 'Button', nil, Dropdown ) );
   Swatch.R, Swatch.G, Swatch.B = Color.r, Color.g, Color.b;
   Swatch:GetNormalTexture():SetVertexColor( Color.r, Color.g, Color.b );
-  Swatch:SetScript( "OnClick", Dropdown.SwatchOnClick );
+  Swatch:SetScript( 'OnClick', Dropdown.SwatchOnClick );
   return Swatch;
 end
 local Default = CreatePreset( HIGHLIGHT_FONT_COLOR ); -- Changes to match editbox text color
-Default:SetPoint( "TOPLEFT", 12, -12 );
-Default:SetScript( "OnShow", Dropdown.DefaultOnShow );
+Default:SetPoint( 'TOPLEFT', 12, -12 );
+Default:SetScript( 'OnShow', Dropdown.DefaultOnShow );
 local Gray = CreatePreset( ITEM_QUALITY_COLORS[ 0 ] );
-Gray:SetPoint( "LEFT", Default, "RIGHT", 2, 0 );
+Gray:SetPoint( 'LEFT', Default, 'RIGHT', 2, 0 );
 local Purple = CreatePreset( ITEM_QUALITY_COLORS[ 4 ] );
-Purple:SetPoint( "LEFT", Gray, "RIGHT", 2, 0 );
+Purple:SetPoint( 'LEFT', Gray, 'RIGHT', 2, 0 );
 local Blue = CreatePreset( ITEM_QUALITY_COLORS[ 3 ] );
-Blue:SetPoint( "LEFT", Purple, "RIGHT", 2, 0 );
+Blue:SetPoint( 'LEFT', Purple, 'RIGHT', 2, 0 );
 -- Second row
 local Green = CreatePreset( ITEM_QUALITY_COLORS[ 2 ] );
-Green:SetPoint( "TOPLEFT", Default, "BOTTOMLEFT", 0, -2 );
+Green:SetPoint( 'TOPLEFT', Default, 'BOTTOMLEFT', 0, -2 );
 local Yellow = CreatePreset( NORMAL_FONT_COLOR );
-Yellow:SetPoint( "LEFT", Green, "RIGHT", 2, 0 );
+Yellow:SetPoint( 'LEFT', Green, 'RIGHT', 2, 0 );
 local Orange = CreatePreset( ITEM_QUALITY_COLORS[ 5 ] );
-Orange:SetPoint( "LEFT", Yellow, "RIGHT", 2, 0 );
+Orange:SetPoint( 'LEFT', Yellow, 'RIGHT', 2, 0 );
 local Red = CreatePreset( RED_FONT_COLOR );
-Red:SetPoint( "LEFT", Orange, "RIGHT", 2, 0 );
+Red:SetPoint( 'LEFT', Orange, 'RIGHT', 2, 0 );
 -- Third row
 local Custom = Dropdown.Custom;
 Custom:SetText( GUI.L.COLOR_CUSTOM );
-Custom:SetPoint( "BOTTOMLEFT", 6, 6 );
-Custom:SetPoint( "RIGHT", -6, 0 );
+Custom:SetPoint( 'BOTTOMLEFT', 6, 6 );
+Custom:SetPoint( 'RIGHT', -6, 0 );
 Custom:SetHeight( 20 );
-Custom:SetScript( "OnClick", Custom.OnClick );
+Custom:SetScript( 'OnClick', Custom.OnClick );
 
 
-GUI.RegisterCallback( NS, "EditorSetScriptObject" );
+GUI.RegisterCallback( NS, 'EditorSetScriptObject' );
 
 NS:Unpack( {} ); -- Default swatch color
