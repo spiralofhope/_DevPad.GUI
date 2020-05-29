@@ -4,21 +4,36 @@
 
 
 
-# 8.2 series
+# 8.x - Battle for Azeroth (BfA)
 
-## 8.2.5
 
-- Style update
+## 8.3 series
 
- 
-# 8.1 series
 
-## 8.1.0.0
+### 8.3.0.0
 
 - TOC bump
 
 
-# 8.0.1.2
+
+## 8.2 series
+
+
+### 8.2.5.1
+
+- Style update
+
+ 
+
+## 8.1 series
+
+
+### 8.1.0.0
+
+- TOC bump
+
+
+## 8.0.1.2
 
 - Fixed #25 - Revisit scaling
   -  Apparently fixed at Blizzard's end.
@@ -31,49 +46,55 @@
 - Fixed  #26 - Re-implemented linking functionality to non-script texts.
 
 
-# 7.3 series
 
-## 7.3.2.0
+# 7.x - Legion
+
+
+## 7.3 series
+
+
+### 7.3.2.0
 
 - TOC bump
 
 
-## 7.3.0.8
+### 7.3.0.8
 
 - Audited #19 - Investigate item linking in text areas
   -  Reverted some code to the original author's implementation.  This fixes a freeze issue.
   -  See also #23 - Reproduce linking freeze
 
-## 7.3.0.7
+
+### 7.3.0.7
 
 - Done/implemented #19 - Investigate item linking in text areas
   -  Thanks to casualshammy for the reminder
 - Began intermediate usage documentation in `usage.intermediate.markdown`
 
 
-## 7.3.0.6
+### 7.3.0.6
 
 - Tinkered with #14 - Change the font of the main list
 - Fixed list tooltip functionality:  Comments at the top of a file are shown as a tooltip when mousing over the list.
 
 
-## 7.3.0.5
+### 7.3.0.5
 
 - Implemented #6 - Configuration
 
 
-## 7.3.0.4
+### 7.3.0.4
 
 - Fixed #1 - Cursor doesn't line up with active line
 
 
-## 7.3.0.3
+### 7.3.0.3
 
 - Re-enabled the modules I disabled for testing.
   -  Whoops.
   
 
-## 7.3.0.2
+### 7.3.0.2
 
 - `_DevPad.GUI.Editor.lua` had its style aggressively changed.
 - Slightly-brightened the current line's highlighting.
@@ -82,7 +103,7 @@
   -  The fix for #1 was a scaling issue, and this is meant to make up for the side-effect of enlarged text.
 
 
-## 7.3.0.1
+### 7.3.0.1
 
 - Fixed #2 - PlaySound errors
   -  7.3.0 introduced PlaySound() changes.
