@@ -10,7 +10,7 @@
 ## 8.3 series
 
 
-### retail 8.3.0.1, classic 1.13.1
+### retail 8.3.0.0, classic 1.13.0
 
 - TOC bump
 - Confirmed compatibility with classic.
