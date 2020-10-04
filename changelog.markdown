@@ -7,6 +7,15 @@
 # 8.x - Battle for Azeroth (BfA)
 
 
+## retail 8.3.7.1, classic 1.13.1
+
+Shadowlands beta testing
+
+- Tested for Shadowlands beta 9.0.2.36086
+- [SetBackdrop](https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes#backdrop-system-changes) rough fix.
+  -  Items to investigate are noted with "[Issue #29](https://github.com/spiralofhope/_DevPad.GUI/issues/29)"
+
+
 ## retail 8.3.0.0, classic 1.13.0
 
 - TOC bump

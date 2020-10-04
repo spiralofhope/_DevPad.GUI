@@ -84,7 +84,7 @@ end
 --- Starts dragging the frame.
 function NS:OnMouseDown ()
   self:StartMoving();
-  self:SetBackdropBorderColor( 1, 1, 1 );
+  --self:SetBackdropBorderColor( 1, 1, 1 );
 end
 --- Stops dragging the frame.
 function NS:OnMouseUp ()
@@ -95,13 +95,15 @@ function NS:OnMouseUp ()
       local Point = FlyPaper.Stick( self, Frame, NS.StickTolerance );
       if ( Point ) then
         self.StickTarget, self.StickPoint = Name, Point;
-        self:SetBackdropBorderColor( unpack( NS.StickColor ) );
+        -- Issue #29
+        --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
+        --self:SetBackdropBorderColor( unpack( NS.StickColor ) );
         return;
       end
     end
   end
   self.StickTarget, self.StickPoint = nil;
-  self:SetBackdropBorderColor( 1, 1, 1 );
+  --self:SetBackdropBorderColor( 1, 1, 1 );
 end
 
 --- Updates clamp to allow dragging the frame mostly but not completely offscreen.
@@ -174,11 +176,15 @@ function NS:Unpack ( Options )
     NS.StickyFrames[ Options.StickTarget ], Options.StickPoint )
   ) then
     self.StickTarget, self.StickPoint = Options.StickTarget, Options.StickPoint;
-    self:SetBackdropBorderColor( unpack( NS.StickColor ) );
+    -- Issue #29
+    --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
+    --self:SetBackdropBorderColor( unpack( NS.StickColor ) );
   else
     self:ClearAllPoints();
     self:SetPoint( Options.Point or 'CENTER', nil, Options.Point or 'CENTER', Options.X or 0, Options.Y or 0 );
-    self:SetBackdropBorderColor( 1, 1, 1 );
+    -- Issue #29
+    --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
+    --self:SetBackdropBorderColor( 1, 1, 1 );
   end
 end
 
@@ -197,7 +203,10 @@ function NS:New ( Name )
   --Frame:SetScale( _DevPad_GUI_options.scale )
   Frame:SetFrameStrata( 'HIGH' );
   Frame:SetToplevel( true );
-  Frame:SetBackdrop( {
+  -- Issue #29
+  --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
+  local frame = CreateFrame("Frame", nil, UIParent, BackdropTemplateMixin and "BackdropTemplate")
+  frame:SetBackdrop( {
     bgFile = [[Interface\TutorialFrame\TutorialFrameBackground]];
     edgeFile = [[Interface\TutorialFrame\TutorialFrameBorder]];
     tile = true; tileSize = 32; edgeSize = 32;

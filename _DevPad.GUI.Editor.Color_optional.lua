@@ -368,25 +368,28 @@ Container.Padding, Container.Width = -8, Swatch:GetWidth() + Dropper:GetWidth();
 Container:OnHide();
 GUI.Editor:AddTitleButton( Container, Container.Padding );
 
--- Color dropdown
-local Dropdown = NS.Dropdown;
-Dropdown:Hide();
-Dropdown:SetSize( 92, 74 );
-Dropdown:SetPoint( 'TOPLEFT', Swatch, 'BOTTOMLEFT', -12, 2 );
-Dropdown:SetBackdrop( {
-  edgeFile = [[Interface\DialogFrame\UI-DialogBox-Border]];
-  bgFile = [[Interface\DialogFrame\UI-DialogBox-Background-Dark]];
-  edgeSize = 20; tileSize = 20; tile = true;
-  insets = { left = 4; right = 4; top = 4; bottom = 4; };
-} );
-local Background, Border = TOOLTIP_DEFAULT_BACKGROUND_COLOR, TOOLTIP_DEFAULT_COLOR;
-Dropdown:SetBackdropColor( Background.r, Background.g, Background.b );
-Dropdown:SetBackdropBorderColor( Border.r, Border.g, Border.b );
-Dropdown:EnableMouse( true );
-Dropdown:SetClampedToScreen( true );
-Dropdown:SetFrameLevel( Dropdown:GetFrameLevel() + 10 ); -- Above editbox
-Dropdown:SetScript( 'OnUpdate', Dropdown.OnUpdate );
---- @return A color swatch button initialized to R, G, B.
+-- Issue #29
+--   https://github.com/spiralofhope/_DevPad.GUI/issues/29
+---- Color dropdown
+--local Dropdown = NS.Dropdown;
+--Dropdown:Hide();
+--Dropdown:SetSize( 92, 74 );
+--Dropdown:SetPoint( 'TOPLEFT', Swatch, 'BOTTOMLEFT', -12, 2 );
+--Dropdown:SetBackdrop( {
+  --edgeFile = [[Interface\DialogFrame\UI-DialogBox-Border]];
+  --bgFile = [[Interface\DialogFrame\UI-DialogBox-Background-Dark]];
+  --edgeSize = 20; tileSize = 20; tile = true;
+  --insets = { left = 4; right = 4; top = 4; bottom = 4; };
+--} );
+--local Background, Border = TOOLTIP_DEFAULT_BACKGROUND_COLOR, TOOLTIP_DEFAULT_COLOR;
+--Dropdown:SetBackdropColor( Background.r, Background.g, Background.b );
+--Dropdown:SetBackdropBorderColor( Border.r, Border.g, Border.b );
+--Dropdown:EnableMouse( true );
+--Dropdown:SetClampedToScreen( true );
+--Dropdown:SetFrameLevel( Dropdown:GetFrameLevel() + 10 ); -- Above editbox
+--Dropdown:SetScript( 'OnUpdate', Dropdown.OnUpdate );
+----- @return A color swatch button initialized to R, G, B.
+
 local function CreatePreset ( Color )
   local Swatch = SetupSwatch( CreateFrame( 'Button', nil, Dropdown ) );
   Swatch.R, Swatch.G, Swatch.B = Color.r, Color.g, Color.b;
