@@ -84,6 +84,8 @@ end
 --- Starts dragging the frame.
 function NS:OnMouseDown ()
   self:StartMoving();
+  -- Issue #29
+  --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
   --self:SetBackdropBorderColor( 1, 1, 1 );
 end
 --- Stops dragging the frame.
@@ -103,6 +105,8 @@ function NS:OnMouseUp ()
     end
   end
   self.StickTarget, self.StickPoint = nil;
+  -- Issue #29
+  --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
   --self:SetBackdropBorderColor( 1, 1, 1 );
 end
 
@@ -203,6 +207,7 @@ function NS:New ( Name )
   --Frame:SetScale( _DevPad_GUI_options.scale )
   Frame:SetFrameStrata( 'HIGH' );
   Frame:SetToplevel( true );
+
   -- Issue #29
   --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
   local frame = CreateFrame("Frame", nil, UIParent, BackdropTemplateMixin and "BackdropTemplate")
@@ -212,6 +217,8 @@ function NS:New ( Name )
     tile = true; tileSize = 32; edgeSize = 32;
     insets = { left = 7; right = 5; top = 3; bottom = 6; };
   } );
+  --------------------------------------------------------------------
+
   Frame.Pack, Frame.Unpack = self.Pack, self.Unpack;
   Frame.NewButton, Frame.AddTitleButton = self.NewButton, self.AddTitleButton;
   -- Make dragable
