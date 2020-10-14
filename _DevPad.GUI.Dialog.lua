@@ -84,9 +84,7 @@ end
 --- Starts dragging the frame.
 function NS:OnMouseDown ()
   self:StartMoving();
-  -- Issue #29
-  --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-  --self:SetBackdropBorderColor( 1, 1, 1 );
+  self:SetBackdropBorderColor( 1, 1, 1 );
 end
 --- Stops dragging the frame.
 function NS:OnMouseUp ()
@@ -97,17 +95,13 @@ function NS:OnMouseUp ()
       local Point = FlyPaper.Stick( self, Frame, NS.StickTolerance );
       if ( Point ) then
         self.StickTarget, self.StickPoint = Name, Point;
-        -- Issue #29
-        --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-        --self:SetBackdropBorderColor( unpack( NS.StickColor ) );
+        self:SetBackdropBorderColor( unpack( NS.StickColor ) );
         return;
       end
     end
   end
   self.StickTarget, self.StickPoint = nil;
-  -- Issue #29
-  --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-  --self:SetBackdropBorderColor( 1, 1, 1 );
+  self:SetBackdropBorderColor( 1, 1, 1 );
 end
 
 --- Updates clamp to allow dragging the frame mostly but not completely offscreen.
@@ -180,15 +174,11 @@ function NS:Unpack ( Options )
     NS.StickyFrames[ Options.StickTarget ], Options.StickPoint )
   ) then
     self.StickTarget, self.StickPoint = Options.StickTarget, Options.StickPoint;
-    -- Issue #29
-    --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-    --self:SetBackdropBorderColor( unpack( NS.StickColor ) );
+    self:SetBackdropBorderColor( unpack( NS.StickColor ) );
   else
     self:ClearAllPoints();
     self:SetPoint( Options.Point or 'CENTER', nil, Options.Point or 'CENTER', Options.X or 0, Options.Y or 0 );
-    -- Issue #29
-    --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-    --self:SetBackdropBorderColor( 1, 1, 1 );
+    self:SetBackdropBorderColor( 1, 1, 1 );
   end
 end
 
@@ -197,8 +187,8 @@ end
 
 local ResizeTexture = [[Interface\AddOns\]]..( ... )..[[\Skin\ResizeGrip]];
 --- @return A new frame.
-function NS:New ( Name )
-  local Frame = CreateFrame( 'Frame', Name, UIParent )
+function NS:New( Name )
+  local Frame = CreateFrame( 'Frame', Name, UIParent, BackdropTemplateMixin and 'BackdropTemplate' )
   --  Don't inherit from the world frame, to resolve a scaling issue:
   --  This defaults to a scale of 1, and everything else is inheriting from this frame.
   --  Note - Explicitly setting the scale of this frame will re-break the editor's cursor.
@@ -207,11 +197,7 @@ function NS:New ( Name )
   --Frame:SetScale( _DevPad_GUI_options.scale )
   Frame:SetFrameStrata( 'HIGH' );
   Frame:SetToplevel( true );
-
-  -- Issue #29
-  --   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-  local frame = CreateFrame("Frame", nil, UIParent, BackdropTemplateMixin and "BackdropTemplate")
-  frame:SetBackdrop( {
+  Frame:SetBackdrop( {
     bgFile = [[Interface\TutorialFrame\TutorialFrameBackground]];
     edgeFile = [[Interface\TutorialFrame\TutorialFrameBorder]];
     tile = true; tileSize = 32; edgeSize = 32;
