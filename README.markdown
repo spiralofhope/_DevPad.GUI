@@ -21,6 +21,7 @@ NOTE:  This addon requires [_DevPad](https://github.com/spiralofhope/_DevPad)
 
 - This is A fork of 
 [saiket's _DevPad.GUI](https://github.com/Saiket/wow-saiket/tree/master/_DevPad.GUI).
+  -  DevPad was inspired by the AddOn [Hack](https://www.wowinterface.com/downloads/info11101-Hack.html), by *Mud*.
 - I am a documentation guy, not a programmer.  It is unlikely I can make any large changes.
   -  If you are a developer, I am happy to:
      -  Accept GitHub pull requests.
@@ -62,6 +63,7 @@ Perhaps your game is installed to one of:
 
 - [Curse blog entry on manually installing AddOns](https://support.curse.com/hc/en-us/articles/204270005)
 - [Curse FAQ on manually installing AddOns](https://mods.curse.com/faqs/wow-addons#manual)
+
 
 
 # Configuration / Usage
