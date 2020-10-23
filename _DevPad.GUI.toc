@@ -49,8 +49,6 @@ _DevPad.GUI.Editor.lua
 
 # Optional modules
 _DevPad.GUI.List.Search_optional.lua
-# Issue #29
-#   https://github.com/spiralofhope/_DevPad.GUI/issues/29
-#_DevPad.GUI.Editor.Color_optional.lua
+_DevPad.GUI.Editor.Color_optional.lua
 _DevPad.GUI.Editor.History_optional.lua
 _DevPad.GUI.Editor.LineNumbers_optional.lua

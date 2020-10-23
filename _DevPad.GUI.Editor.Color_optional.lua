@@ -12,7 +12,7 @@ GUI.Editor.Color = NS;
 NS.ButtonContainer = CreateFrame( 'Frame', nil, GUI.Editor );
 NS.Swatch = CreateFrame( 'Button', nil, NS.ButtonContainer );
 NS.Dropper = GUI.Editor:NewButton( [[Interface\AddOns\]]..( ... )..[[\Skin\ColorDropper]] );
-NS.Dropdown = CreateFrame( 'Frame', nil, NS.Swatch );
+NS.Dropdown = CreateFrame( 'Frame', nil, NS.Swatch, 'BackdropTemplate' )
 NS.Dropdown.Custom = CreateFrame( 'Button', nil, NS.Dropdown, 'UIPanelButtonTemplate' );
 
 
