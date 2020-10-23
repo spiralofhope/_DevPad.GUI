@@ -113,19 +113,24 @@ do
       return
     end
     Enabled[ self ] = false
-    self.GetText, self.SetText, self.Insert = nil
-    self.GetCursorPosition, self.SetCursorPosition, self.HighlightText = nil
-
+    self.GetText              = nil
+    self.SetText              = nil
+    self.Insert               = nil
+    self.GetCursorPosition    = nil
+    self.SetCursorPosition    = nil
+    self.HighlightText        = nil
     local Code, Cursor = lib.StripColors( self:GetText(), self:GetCursorPosition() )
     self:SetText( Code )
     self:SetCursorPosition( Cursor )
-
     self:SetMaxBytes( self.faiap_maxBytes )
     self:SetCountInvisibleLetters( self.faiap_countInvisible )
-    self.faiap_maxBytes, self.faiap_countInvisible = nil
-    self.faiap_tabWidth, self.faiap_colorTable = nil
-    CodeCache[ self ], ColoredCache[ self ] = nil
-    NumLinesCache[ self ] = nil
+    self.faiap_maxBytes       = nil
+    self.faiap_countInvisible = nil
+    self.faiap_tabWidth       = nil
+    self.faiap_colorTable     = nil
+    CodeCache[ self ]         = nil
+    ColoredCache[ self ]      = nil
+    NumLinesCache[ self ]     = nil
     return true
   end
 
@@ -165,16 +170,9 @@ do
     end
   end
   --- Clears cached contents if set directly.
-  -- This is necessary because OnTextChanged won't fire immediately or if the
-  -- edit box is hidden.
-  local function SetText ( self, ... )
-    CodeCache[ self ] = nil
-    return SetTextBackup( self, ... )
-  end
-  local function Insert ( self, ... )
-    CodeCache[ self ] = nil
-    return InsertBackup( self, ... )
-  end
+  -- This is necessary because OnTextChanged won't fire immediately or if the edit box is hidden.
+  local function SetText( self, ... ) CodeCache[ self ] = nil return SetTextBackup( self, ... ) end
+  local function Insert(  self, ... ) CodeCache[ self ] = nil return InsertBackup(  self, ... ) end
   --- @return Cursor position within un-colored text.
   local function GetCursorPosition ( self, ... )
     local _, Cursor = lib.StripColors( GetTextBackup( self ), GetCursorPositionBackup( self, ... ) )
@@ -189,12 +187,8 @@ do
   local function HighlightText ( self, Start, End, ... )
     if ( Start ~= End and ( Start or End ) ) then
       local Code, _ = GetCodeCached( self )
-      if ( Start ) then
-        _, Start = lib.FormatCode( GetCodeCached( self ), nil, self.faiap_colorTable, Start )
-      end
-      if ( End ) then
-        _, End = lib.FormatCode( GetCodeCached( self ), nil, self.faiap_colorTable, End )
-      end
+      if ( Start ) then _, Start = lib.FormatCode( GetCodeCached( self ), nil, self.faiap_colorTable, Start ) end
+      if ( End   ) then _, End   = lib.FormatCode( GetCodeCached( self ), nil, self.faiap_colorTable, End   ) end
     end
     return HighlightTextBackup( self, Start, End, ... )
   end
@@ -231,7 +225,8 @@ do
       self:SetCountInvisibleLetters( false )
       self.faiap_maxBytes                                               = self:GetMaxBytes()
       self.faiap_countInvisible                                         = self:IsCountInvisibleLetters()
-      self.GetText, self.SetText                                        = GetText, SetText
+      self.GetText                                                      = GetText
+      self.SetText                                                      = SetText
       self.Insert                                                       = Insert
       self.GetCursorPosition                                            = GetCursorPosition
       self.SetCursorPosition                                            = SetCursorPosition
@@ -258,7 +253,6 @@ end
 
 
 
-
 -- Token types
 lib.Tokens = {} --- Token names to TokenTypeIDs, used to define custom ColorTables.
 local NewToken
@@ -271,6 +265,8 @@ do
     return Count
   end
 end
+
+
 
 local TK_UNKNOWN                                                        = NewToken( 'UNKNOWN' )
 local TK_IDENTIFIER                                                     = NewToken( 'IDENTIFIER' )
@@ -347,36 +343,40 @@ local Linebreaks = {
   [ BYTE_CR ] = true,
   [ BYTE_LF ] = true,
 }
+
 local Whitespace = {
   [ BYTE_SPACE ] = true,
-  [ BYTE_TAB ] = true,
+  [ BYTE_TAB ]   = true,
 }
+
 --- Mapping of bytes to the only tokens they can represent, or true if indeterminate
 local TokenBytes = {
-  [ BYTE_ASTERISK ] = TK_MULTIPLY,
-  [ BYTE_CIRCUMFLEX ] = TK_POWER,
-  [ BYTE_COLON ] = TK_COLON,
-  [ BYTE_COMMA ] = TK_COMMA,
-  [ BYTE_DOUBLE_QUOTE ] = true,
-  [ BYTE_EQUALS ] = true,
-  [ BYTE_GREATERTHAN ] = true,
-  [ BYTE_HASH ] = TK_SIZE,
-  [ BYTE_LEFTBRACKET ] = true,
-  [ BYTE_LEFTCURLY ] = TK_LEFTCURLY,
-  [ BYTE_LEFTPAREN ] = TK_LEFTPAREN,
-  [ BYTE_LESSTHAN ] = true,
-  [ BYTE_MINUS ] = true,
-  [ BYTE_PERCENT ] = TK_MODULUS,
-  [ BYTE_PERIOD ] = true,
-  [ BYTE_PLUS ] = TK_ADD,
-  [ BYTE_RIGHTBRACKET ] = TK_RIGHTBRACKET,
-  [ BYTE_RIGHTCURLY ] = TK_RIGHTCURLY,
-  [ BYTE_RIGHTPAREN ] = TK_RIGHTPAREN,
-  [ BYTE_SEMICOLON ] = TK_SEMICOLON,
-  [ BYTE_SINGLE_QUOTE ] = true,
-  [ BYTE_SLASH ] = TK_DIVIDE,
-  [ BYTE_TILDE ] = true,
+  [ BYTE_ASTERISK ]                                                     = TK_MULTIPLY,
+  [ BYTE_CIRCUMFLEX ]                                                   = TK_POWER,
+  [ BYTE_COLON ]                                                        = TK_COLON,
+  [ BYTE_COMMA ]                                                        = TK_COMMA,
+  [ BYTE_DOUBLE_QUOTE ]                                                 = true,
+  [ BYTE_EQUALS ]                                                       = true,
+  [ BYTE_GREATERTHAN ]                                                  = true,
+  [ BYTE_HASH ]                                                         = TK_SIZE,
+  [ BYTE_LEFTBRACKET ]                                                  = true,
+  [ BYTE_LEFTCURLY ]                                                    = TK_LEFTCURLY,
+  [ BYTE_LEFTPAREN ]                                                    = TK_LEFTPAREN,
+  [ BYTE_LESSTHAN ]                                                     = true,
+  [ BYTE_MINUS ]                                                        = true,
+  [ BYTE_PERCENT ]                                                      = TK_MODULUS,
+  [ BYTE_PERIOD ]                                                       = true,
+  [ BYTE_PLUS ]                                                         = TK_ADD,
+  [ BYTE_RIGHTBRACKET ]                                                 = TK_RIGHTBRACKET,
+  [ BYTE_RIGHTCURLY ]                                                   = TK_RIGHTCURLY,
+  [ BYTE_RIGHTPAREN ]                                                   = TK_RIGHTPAREN,
+  [ BYTE_SEMICOLON ]                                                    = TK_SEMICOLON,
+  [ BYTE_SINGLE_QUOTE ]                                                 = true,
+  [ BYTE_SLASH ]                                                        = TK_DIVIDE,
+  [ BYTE_TILDE ]                                                        = true,
 }
+
+
 
 local strfind = string.find
 --- Reads the next Lua identifier from its beginning.
@@ -558,27 +558,27 @@ end
 
 
 local Keywords = {
-  [ 'nil' ] = true,
-  [ 'true' ] = true,
-  [ 'false' ] = true,
-  [ 'local' ] = true,
-  [ 'and' ] = true,
-  [ 'or' ] = true,
-  [ 'not' ] = true,
-  [ 'while' ] = true,
-  [ 'for' ] = true,
-  [ 'in' ] = true,
-  [ 'do' ] = true,
-  [ 'repeat' ] = true,
-  [ 'break' ] = true,
-  [ 'until' ] = true,
-  [ 'if' ] = true,
-  [ 'elseif' ] = true,
-  [ 'then' ] = true,
-  [ 'else' ] = true,
-  [ 'function' ] = true,
-  [ 'return' ] = true,
-  [ 'end' ] = true,
+  [ 'nil' ]       = true,
+  [ 'true' ]      = true,
+  [ 'false' ]     = true,
+  [ 'local' ]     = true,
+  [ 'and' ]       = true,
+  [ 'or' ]        = true,
+  [ 'not' ]       = true,
+  [ 'while' ]     = true,
+  [ 'for' ]       = true,
+  [ 'in' ]        = true,
+  [ 'do' ]        = true,
+  [ 'repeat' ]    = true,
+  [ 'break' ]     = true,
+  [ 'until' ]     = true,
+  [ 'if' ]        = true,
+  [ 'elseif' ]    = true,
+  [ 'then' ]      = true,
+  [ 'else' ]      = true,
+  [ 'function' ]  = true,
+  [ 'return' ]    = true,
+  [ 'end' ]       = true,
 }
 local IndentOpen = { 0, 1 }
 local IndentClose = { -1, 0 }
@@ -633,18 +633,24 @@ function lib:FormatCode ( TabWidth, ColorTable, CursorOld )
       local Token = strsub( self, Pos, PosNext - 1 )
 
       local ColorCode
+      -- issue #30 - Text coloring in snippet pages is wrong.
+      --   https://github.com/spiralofhope/_DevPad.GUI/issues/30
       if ( ColorTable ) then -- Add coloring
-        local Color = ColorTable[ Keywords[ Token ] and TK_KEYWORD or Token ]
+        local Color = 
+             ColorTable[ Keywords[ Token ] and TK_KEYWORD or Token ]
           or ColorTable[ TokenType ]
-        ColorCode = ( ColorLast and not Color and TERMINATOR ) -- End color
-          or ( Color ~= ColorLast and Color ) -- Change color
+        ColorCode =
+             ( ColorLast and not Color and TERMINATOR ) -- End color
+          or ( Color ~= ColorLast and Color )           -- Change color
         if ( ColorCode ) then
-          Buffer[ #Buffer + 1 ], BufferLen = ColorCode, BufferLen + #ColorCode
+          Buffer[ #Buffer + 1 ] = ColorCode
+          BufferLen = BufferLen + #ColorCode
         end
         ColorLast = Color
       end
 
-      Buffer[ #Buffer + 1 ], BufferLen = Token, BufferLen + #Token
+      Buffer[ #Buffer + 1 ] = Token
+      BufferLen = BufferLen + #Token
 
       if ( CursorOld and not Cursor
         and CursorOld < PosNext - 1 -- Before end of token
