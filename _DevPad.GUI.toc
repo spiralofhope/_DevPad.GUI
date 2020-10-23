@@ -37,6 +37,7 @@
 Libs\FlyPaper\FlyPaper.lua
 
 # Automatic indentation
+# This also provides color.
 Libs\ForAllIndentsAndPurposes\indent.lua
 
 # See http://wow.curseforge.com/addons/devpad/localization/

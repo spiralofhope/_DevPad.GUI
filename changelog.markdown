@@ -7,6 +7,14 @@
 # 9.x - Shadowlands
 
 
+## WORKING
+
+- Fix [issue #29](https://github.com/spiralofhope/_DevPad.GUI/issues/29) - Fix background colors in Shadowlands beta
+  -  Remaining issue with `_DevPad.GUI.Editor.Color_optional.lua`
+- Style changes to the _DevPad modification of [For All Indents And Purposes](https://wowinterface.com/downloads/info4895-ForAllIndentsAndPurposes.html)
+  -  `Libs/ForAllIndentsAndPurposes`.
+
+
 ## retail 9.0.1.1, classic 1.13.5.1
 
 Shadowlands beta testing
