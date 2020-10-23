@@ -26,6 +26,7 @@ NOTE:  This addon requires [_DevPad](https://github.com/spiralofhope/_DevPad)
      -  Accept GitHub pull requests.
      -  Add you as a contributor on GitHub.
      -  Hand this project over!
+- This uses a modified version of [For All Indents And Purposes](https://wowinterface.com/downloads/info4895-ForAllIndentsAndPurposes.html).
 
 
 
