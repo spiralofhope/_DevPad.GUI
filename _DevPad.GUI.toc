@@ -36,10 +36,6 @@
 # For the editor window attaching to the main one
 Libs\FlyPaper\FlyPaper.lua
 
-# Automatic indentation
-# This also provides color.
-Libs\ForAllIndentsAndPurposes\indent.lua
-
 # See http://wow.curseforge.com/addons/devpad/localization/
 Locales\Locale-enUS.lua
 
@@ -48,8 +44,24 @@ _DevPad.GUI.Dialog.lua
 _DevPad.GUI.List.lua
 _DevPad.GUI.Editor.lua
 
+
+#
 # Optional modules
-_DevPad.GUI.List.Search_optional.lua
+# You can disable any of these by prepending a numbersign.
+#
+
+# Automatic indentation
+# This also provides color.
+Libs\ForAllIndentsAndPurposes\indent.lua
+
+# Color editing tools for non-Lua scripts:
 _DevPad.GUI.Editor.Color_optional.lua
+
+# Undo and redo history:
 _DevPad.GUI.Editor.History_optional.lua
+
+# Line numbering:
 _DevPad.GUI.Editor.LineNumbers_optional.lua
+
+# Script text searching tools:
+_DevPad.GUI.List.Search_optional.lua
