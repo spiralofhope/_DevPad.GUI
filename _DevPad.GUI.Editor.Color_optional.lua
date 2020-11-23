@@ -160,7 +160,12 @@ do
     end
   end
 
-  local TERMINATOR, BYTE_PIPE = "|r", ( "|" ):byte();
+  -- See issue #34
+  --   https://github.com/spiralofhope/_DevPad.GUI/issues/34
+  local TERMINATOR = "|r"
+  --local TERMINATOR = '|r|r|r|r|r|r|r|r'
+
+  local BYTE_PIPE = ( "|" ):byte()
   --- Wraps this editbox's selected text with the given color.
   -- @return True if text was selected and colored.
   function NS:ColorSelection ( R, G, B )

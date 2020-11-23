@@ -603,7 +603,12 @@ local Indents = {
 
 local strrep, strsub = string.rep, string.sub
 local tinsert = table.insert
+
+-- See issue #34
+--   https://github.com/spiralofhope/_DevPad.GUI/issues/34
 local TERMINATOR = '|r'
+--local TERMINATOR = '|r|r|r|r|r|r|r|r'
+
 local Buffer = {}
 --- Syntax highlights and indents a string of Lua code.
 -- @param CursorOld  Optional cursor position to keep track of.
@@ -640,7 +645,7 @@ function lib:FormatCode ( TabWidth, ColorTable, CursorOld )
              ColorTable[ Keywords[ Token ] and TK_KEYWORD or Token ]
           or ColorTable[ TokenType ]
         ColorCode =
-             ( ColorLast and not Color and TERMINATOR ) -- End color
+             ( ColorLast and not Color ) -- End color
           or ( Color ~= ColorLast and Color )           -- Change color
         if ( ColorCode ) then
           Buffer[ #Buffer + 1 ] = ColorCode
