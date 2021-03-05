@@ -606,8 +606,8 @@ local tinsert = table.insert
 
 -- See issue #34
 --   https://github.com/spiralofhope/_DevPad.GUI/issues/34
-local TERMINATOR = '|r'
---local TERMINATOR = '|r|r|r|r|r|r|r|r'
+--local TERMINATOR = '|r'
+local TERMINATOR = '|r|r'
 
 local Buffer = {}
 --- Syntax highlights and indents a string of Lua code.
